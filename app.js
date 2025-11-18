@@ -687,6 +687,11 @@ class ScrollToTopButton {
 
     scrollToTop(e) {
         e.preventDefault();
+        
+        // ✨ NEW: Reset URL to root without hash
+        window.history.pushState(null, null, window.location.pathname);
+        
+        // Smooth scroll to top
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
