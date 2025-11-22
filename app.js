@@ -596,6 +596,7 @@ showSkillDetails(index) {
     }
 }
 // Contact form manager
+// Contact form manager
 class ContactFormManager {
     constructor() {
         this.form = document.getElementById('contactForm');
@@ -628,37 +629,37 @@ class ContactFormManager {
     }
     
     validateForm(data) {
-    const { name, email, subject, message } = data;
-    
-    if (!name.trim()) {
-        this.showError('Παρακαλώ εισάγετε το όνομά σας');
-        return false;
-    }
-    
-    if (!email.trim() || !this.isValidEmail(email)) {
-        this.showError('Παρακαλώ εισάγετε έγκυρο email');
-        return false;
-    }
-    
-    if (!subject.trim()) {
-        this.showError('Παρακαλώ εισάγετε θέμα');
-        return false;
-    }
-    
-    if (!message.trim()) {
-        this.showError('Παρακαλώ εισάγετε μήνυμα');
-        return false;
-    }
+        const { name, email, subject, message } = data;
+        
+        if (!name.trim()) {
+            this.showError('Παρακαλώ εισάγετε το όνομά σας');
+            return false;
+        }
+        
+        if (!email.trim() || !this.isValidEmail(email)) {
+            this.showError('Παρακαλώ εισάγετε έγκυρο email');
+            return false;
+        }
+        
+        if (!subject.trim()) {
+            this.showError('Παρακαλώ εισάγετε θέμα');
+            return false;
+        }
+        
+        if (!message.trim()) {
+            this.showError('Παρακαλώ εισάγετε μήνυμα');
+            return false;
+        }
 
-    // ✅ ΣΩΣΤΟΣ ΕΛΕΓΧΟΣ reCAPTCHA
-    const token = window.grecaptcha?.getResponse();
-    if (!token || token.length === 0) {
-        this.showError('Παρακαλώ ολοκληρώστε το captcha!');
-        return false;
-    }
+        // ✅ ΣΩΣΤΟΣ ΕΛΕΓΧΟΣ reCAPTCHA
+        const token = window.grecaptcha?.getResponse();
+        if (!token || token.length === 0) {
+            this.showError('Παρακαλώ ολοκληρώστε το captcha!');
+            return false;
+        }
 
-    return true;
-}
+        return true;
+    }
     
     isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -703,14 +704,6 @@ class ContactFormManager {
     }
 }
 
-// Αρχικοποίηση
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new ContactFormManager();
-    });
-} else {
-    new ContactFormManager();
-}
 // Navbar scroll effect manager
 class NavbarManager {
     constructor() {
@@ -730,16 +723,17 @@ class NavbarManager {
         }
     }
 }
+
 // Main application controller
 class CVApplication {
     constructor() {
         this.navigationManager = new NavigationManager();
         this.animationManager = new AnimationManager();
         this.modalManager = new ModalManager();
-        // this.contactFormManager = new ContactFormManager(); // Disabled for Formspree
+        this.contactFormManager = new ContactFormManager();  // ← ΜΟΝΟ ΕΔΩΣΕ
         this.navbarManager = new NavbarManager();
-		this.scrollToTopButton = new ScrollToTopButton();
-		this.shareManager = new ShareManager();
+        this.scrollToTopButton = new ScrollToTopButton();
+        this.shareManager = new ShareManager();
         this.init();
     }
     init() {
@@ -747,21 +741,20 @@ class CVApplication {
         this.exposeGlobalFunctions();
     }
     attachEventListeners() {
-  const handleScrollThrottled = throttle(() => {
-    this.navigationManager.updateActiveLink();
-    this.animationManager.revealSections();
-    this.navbarManager.handleScroll();
-  }, 100); // Κάθε 100ms μόνο
+        const handleScrollThrottled = throttle(() => {
+            this.navigationManager.updateActiveLink();
+            this.animationManager.revealSections();
+            this.navbarManager.handleScroll();
+        }, 100);
 
-  window.addEventListener('scroll', handleScrollThrottled);
+        window.addEventListener('scroll', handleScrollThrottled);
 
-  window.addEventListener('load', () => {
-    this.animationManager.revealSections();
-    this.navigationManager.updateActiveLink();
-  });
-}
+        window.addEventListener('load', () => {
+            this.animationManager.revealSections();
+            this.navigationManager.updateActiveLink();
+        });
+    }
     exposeGlobalFunctions() {
-        // Expose functions to global scope for HTML onclick handlers
         window.showExperienceDetails = (index) => {
             this.modalManager.showExperienceDetails(index);
         };
@@ -773,6 +766,7 @@ class CVApplication {
         };
     }
 }
+
 // Scroll to top button functionality
 class ScrollToTopButton {
     constructor() {
@@ -796,18 +790,15 @@ class ScrollToTopButton {
 
     scrollToTop(e) {
         e.preventDefault();
-        
-        // ✨ NEW: Reset URL to root without hash
         history.replaceState(null, '', window.location.pathname);
-        
-        // Smooth scroll to top
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     }
 }
-// Initialize application when DOM is ready
+
+// ✅ ΜΟΝΟ ΜΙΑ ΑΡΧΙΚΟΠΟΙΗΣΗ - ΟΧΙ ΔΙΠΛΗ
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         new CVApplication();  // ← ΑΥΤΟ ΑΡΚΕΙ!
