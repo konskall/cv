@@ -810,10 +810,8 @@ class ScrollToTopButton {
 // Initialize application when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        new CVApplication();
-		new ContactFormManager();
+        new CVApplication();  // ← ΑΥΤΟ ΑΡΚΕΙ!
     });
 } else {
-    new CVApplication();
-	new ContactFormManager();
+    new CVApplication();  // ← ΑΥΤΟ ΑΡΚΕΙ!
 }
