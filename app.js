@@ -628,36 +628,37 @@ class ContactFormManager {
     }
     
     validateForm(data) {
-        const { name, email, subject, message } = data;
-        
-        if (!name.trim()) {
-            this.showError('Παρακαλώ εισάγετε το όνομά σας');
-            return false;
-        }
-        if (!email.trim() || !this.isValidEmail(email)) {
-            this.showError('Παρακαλώ εισάγετε έγκυρο email');
-            return false;
-        }
-        if (!subject.trim()) {
-            this.showError('Παρακαλώ εισάγετε θέμα');
-            return false;
-        }
-        if (!message.trim()) {
-            this.showError('Παρακαλώ εισάγετε μήνυμα');
-            return false;
-        }
-
-        // ✅ Έλεγχος reCAPTCHA
-        const token = grecaptcha.getResponse();
-        console.log('reCAPTCHA token:', token);
-        
-        if (!token || token.length === 0) {
-            this.showError('Παρακαλώ ολοκληρώστε το captcha!');
-            return false;
-        }
-
-        return true;
+    const { name, email, subject, message } = data;
+    
+    if (!name.trim()) {
+        this.showError('Παρακαλώ εισάγετε το όνομά σας');
+        return false;
     }
+    
+    if (!email.trim() || !this.isValidEmail(email)) {
+        this.showError('Παρακαλώ εισάγετε έγκυρο email');
+        return false;
+    }
+    
+    if (!subject.trim()) {
+        this.showError('Παρακαλώ εισάγετε θέμα');
+        return false;
+    }
+    
+    if (!message.trim()) {
+        this.showError('Παρακαλώ εισάγετε μήνυμα');
+        return false;
+    }
+
+    // ✅ ΣΩΣΤΟΣ ΕΛΕΓΧΟΣ reCAPTCHA
+    const token = window.grecaptcha?.getResponse();
+    if (!token || token.length === 0) {
+        this.showError('Παρακαλώ ολοκληρώστε το captcha!');
+        return false;
+    }
+
+    return true;
+}
     
     isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
