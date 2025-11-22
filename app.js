@@ -596,7 +596,6 @@ showSkillDetails(index) {
     }
 }
 // Contact form manager
-// Contact form manager
 class ContactFormManager {
     constructor() {
         this.form = document.getElementById('contactForm');
@@ -635,24 +634,23 @@ class ContactFormManager {
             this.showError('Παρακαλώ εισάγετε το όνομά σας');
             return false;
         }
-        
         if (!email.trim() || !this.isValidEmail(email)) {
             this.showError('Παρακαλώ εισάγετε έγκυρο email');
             return false;
         }
-        
         if (!subject.trim()) {
             this.showError('Παρακαλώ εισάγετε θέμα');
             return false;
         }
-        
         if (!message.trim()) {
             this.showError('Παρακαλώ εισάγετε μήνυμα');
             return false;
         }
 
-        // ✅ ΣΩΣΤΟΣ ΕΛΕΓΧΟΣ reCAPTCHA
-        const token = window.grecaptcha?.getResponse();
+        // ✅ Έλεγχος reCAPTCHA
+        const token = grecaptcha.getResponse();
+        console.log('reCAPTCHA token:', token);
+        
         if (!token || token.length === 0) {
             this.showError('Παρακαλώ ολοκληρώστε το captcha!');
             return false;
@@ -687,12 +685,21 @@ class ContactFormManager {
     }
     
     simulateSubmission() {
-        const errorDiv = this.form.querySelector('.error-message');
-        if (errorDiv) {
-            errorDiv.remove();
-        }
-        
-        setTimeout(() => {
+    const errorDiv = this.form.querySelector('.error-message');
+    if (errorDiv) {
+        errorDiv.remove();
+    }
+    
+    // Στέλνε στο Formspree
+    const formData = new FormData(this.form);
+    
+    fetch('https://formspree.io/f/mvgvbwno', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+        if (response.ok) {
             this.successMessage.style.display = 'block';
             this.form.reset();
             if (window.grecaptcha) window.grecaptcha.reset();
@@ -700,10 +707,23 @@ class ContactFormManager {
             setTimeout(() => {
                 this.successMessage.style.display = 'none';
             }, 3000);
-        }, 500);
-    }
+        }
+    })
+    .catch(error => {
+        this.showError('Σφάλμα κατά την αποστολή');
+        console.error(error);
+    });
+}
 }
 
+// Αρχικοποίηση
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        new ContactFormManager();
+    });
+} else {
+    new ContactFormManager();
+}
 // Navbar scroll effect manager
 class NavbarManager {
     constructor() {
@@ -723,17 +743,16 @@ class NavbarManager {
         }
     }
 }
-
 // Main application controller
 class CVApplication {
     constructor() {
         this.navigationManager = new NavigationManager();
         this.animationManager = new AnimationManager();
         this.modalManager = new ModalManager();
-        this.contactFormManager = new ContactFormManager();  // ← ΜΟΝΟ ΕΔΩΣΕ
+        // this.contactFormManager = new ContactFormManager(); // Disabled for Formspree
         this.navbarManager = new NavbarManager();
-        this.scrollToTopButton = new ScrollToTopButton();
-        this.shareManager = new ShareManager();
+		this.scrollToTopButton = new ScrollToTopButton();
+		this.shareManager = new ShareManager();
         this.init();
     }
     init() {
@@ -741,20 +760,21 @@ class CVApplication {
         this.exposeGlobalFunctions();
     }
     attachEventListeners() {
-        const handleScrollThrottled = throttle(() => {
-            this.navigationManager.updateActiveLink();
-            this.animationManager.revealSections();
-            this.navbarManager.handleScroll();
-        }, 100);
+  const handleScrollThrottled = throttle(() => {
+    this.navigationManager.updateActiveLink();
+    this.animationManager.revealSections();
+    this.navbarManager.handleScroll();
+  }, 100); // Κάθε 100ms μόνο
 
-        window.addEventListener('scroll', handleScrollThrottled);
+  window.addEventListener('scroll', handleScrollThrottled);
 
-        window.addEventListener('load', () => {
-            this.animationManager.revealSections();
-            this.navigationManager.updateActiveLink();
-        });
-    }
+  window.addEventListener('load', () => {
+    this.animationManager.revealSections();
+    this.navigationManager.updateActiveLink();
+  });
+}
     exposeGlobalFunctions() {
+        // Expose functions to global scope for HTML onclick handlers
         window.showExperienceDetails = (index) => {
             this.modalManager.showExperienceDetails(index);
         };
@@ -766,7 +786,6 @@ class CVApplication {
         };
     }
 }
-
 // Scroll to top button functionality
 class ScrollToTopButton {
     constructor() {
@@ -790,19 +809,24 @@ class ScrollToTopButton {
 
     scrollToTop(e) {
         e.preventDefault();
+        
+        // ✨ NEW: Reset URL to root without hash
         history.replaceState(null, '', window.location.pathname);
+        
+        // Smooth scroll to top
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     }
 }
-
-// ✅ ΜΟΝΟ ΜΙΑ ΑΡΧΙΚΟΠΟΙΗΣΗ - ΟΧΙ ΔΙΠΛΗ
+// Initialize application when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        new CVApplication();  // ← ΑΥΤΟ ΑΡΚΕΙ!
+        new CVApplication();
+		new ContactFormManager();
     });
 } else {
-    new CVApplication();  // ← ΑΥΤΟ ΑΡΚΕΙ!
+    new CVApplication();
+	new ContactFormManager();
 }
