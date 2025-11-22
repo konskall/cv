@@ -600,13 +600,18 @@ class ContactFormManager {
     constructor() {
         this.form = document.getElementById('contactForm');
         this.successMessage = document.getElementById('successMessage');
+        console.log('ContactFormManager initialized');
         this.init();
     }
+    
     init() {
         this.form?.addEventListener('submit', (e) => this.handleSubmit(e));
     }
+    
     handleSubmit(e) {
         e.preventDefault();
+        console.log('Form submitted');
+        
         const formData = new FormData(this.form);
         const data = {
             name: formData.get('name'),
@@ -614,46 +619,51 @@ class ContactFormManager {
             subject: formData.get('subject'),
             message: formData.get('message')
         };
-        // Validate form data
+        
         if (!this.validateForm(data)) {
             return;
         }
-        // Simulate form submission
+        
         this.simulateSubmission();
     }
-    validateForm(data) {
-    const { name, email, subject, message } = data;
     
-    if (!name.trim()) {
-        this.showError('Παρακαλώ εισάγετε το όνομά σας');
-        return false;
-    }
-    if (!email.trim() || !this.isValidEmail(email)) {
-        this.showError('Παρακαλώ εισάγετε έγκυρο email');
-        return false;
-    }
-    if (!subject.trim()) {
-        this.showError('Παρακαλώ εισάγετε θέμα');
-        return false;
-    }
-    if (!message.trim()) {
-        this.showError('Παρακαλώ εισάγετε μήνυμα');
-        return false;
-    }
+    validateForm(data) {
+        const { name, email, subject, message } = data;
+        
+        if (!name.trim()) {
+            this.showError('Παρακαλώ εισάγετε το όνομά σας');
+            return false;
+        }
+        if (!email.trim() || !this.isValidEmail(email)) {
+            this.showError('Παρακαλώ εισάγετε έγκυρο email');
+            return false;
+        }
+        if (!subject.trim()) {
+            this.showError('Παρακαλώ εισάγετε θέμα');
+            return false;
+        }
+        if (!message.trim()) {
+            this.showError('Παρακαλώ εισάγετε μήνυμα');
+            return false;
+        }
 
-    // ✅ ΣΩΣΤΟ - Έλεγχος reCAPTCHA
-    if (typeof grecaptcha === 'undefined' || !grecaptcha.getResponse()) {
-        this.showError('Παρακαλώ ολοκληρώστε το captcha!');
-        return false;
-    }
+        // ✅ Έλεγχος reCAPTCHA
+        const token = grecaptcha.getResponse();
+        console.log('reCAPTCHA token:', token);
+        
+        if (!token || token.length === 0) {
+            this.showError('Παρακαλώ ολοκληρώστε το captcha!');
+            return false;
+        }
 
-    return true;
-}
+        return true;
+    }
+    
     isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
+    
     showError(message) {
-        // Create or update error message
         let errorDiv = this.form.querySelector('.error-message');
         if (!errorDiv) {
             errorDiv = document.createElement('div');
@@ -667,30 +677,38 @@ class ContactFormManager {
             this.form.appendChild(errorDiv);
         }
         errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-        // Remove error after 3 seconds
         setTimeout(() => {
             if (errorDiv.parentNode) {
                 errorDiv.remove();
             }
         }, 3000);
     }
+    
     simulateSubmission() {
-    // Hide any existing error messages
-    const errorDiv = this.form.querySelector('.error-message');
-    if (errorDiv) {
-        errorDiv.remove();
-    }
-    setTimeout(() => {
-        this.successMessage.style.display = 'block';
-        this.form.reset();
-        // Κάνε reset και το captcha!
-        if (window.grecaptcha) window.grecaptcha.reset();
-
+        const errorDiv = this.form.querySelector('.error-message');
+        if (errorDiv) {
+            errorDiv.remove();
+        }
+        
         setTimeout(() => {
-            this.successMessage.style.display = 'none';
-        }, 3000);
-    }, 500);
+            this.successMessage.style.display = 'block';
+            this.form.reset();
+            if (window.grecaptcha) window.grecaptcha.reset();
+
+            setTimeout(() => {
+                this.successMessage.style.display = 'none';
+            }, 3000);
+        }, 500);
+    }
 }
+
+// Αρχικοποίηση
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        new ContactFormManager();
+    });
+} else {
+    new ContactFormManager();
 }
 // Navbar scroll effect manager
 class NavbarManager {
