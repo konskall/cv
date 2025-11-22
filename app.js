@@ -648,7 +648,7 @@ class ContactFormManager {
         }
 
         // ✅ Έλεγχος reCAPTCHA
-        const token = grecaptcha.getResponse();
+        const token = window.grecaptcha?.getResponse();
         console.log('reCAPTCHA token:', token);
         
         if (!token || token.length === 0) {
@@ -824,9 +824,7 @@ class ScrollToTopButton {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         new CVApplication();
-		new ContactFormManager();
     });
 } else {
     new CVApplication();
-	new ContactFormManager();
 }
