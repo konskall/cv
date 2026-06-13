@@ -630,7 +630,7 @@ const skillDetailsData = {
     },
     {
         name: "English",
-        level: "Intermediate (B2 Certified - Good command)",
+        level: "Intermediate (B2 Certified - Good knowledge)",
         experience: "State Certificate of Language Proficiency - Registry No.: KB/16028",
         description: "Professional language of communication, content creation",
         achievements: [
