@@ -328,12 +328,14 @@ class NavigationManager {
         });
     }
     toggleMobileMenu() {
-        this.hamburger?.classList.toggle('active');
+        const open = this.hamburger?.classList.toggle('active');
         this.navMenu?.classList.toggle('active');
+        this.hamburger?.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
     closeMobileMenu() {
         this.hamburger?.classList.remove('active');
         this.navMenu?.classList.remove('active');
+        this.hamburger?.setAttribute('aria-expanded', 'false');
     }
 	
     updateActiveLink() {
@@ -358,7 +360,8 @@ class AnimationManager {
     init() {
         this.revealSections();
         this.initHeroAnimations();
-        this.initProfilePulse();
+        // initProfilePulse() removed: the periodic scale transform on the avatar
+        // forced the photo into a low-res compositing layer (blurry on hi-DPI screens)
     }
     revealSections() {
         const sections = document.querySelectorAll('.section');
@@ -758,9 +761,38 @@ class NavbarManager {
         this.navbar?.classList.toggle('scrolled', window.scrollY > 50);
     }
 }
+// Theme (light/dark) manager
+class ThemeManager {
+    constructor() {
+        this.root = document.documentElement;
+        this.btn = document.getElementById('themeToggle');
+        this.icon = document.getElementById('themeIcon');
+        this.init();
+    }
+    init() {
+        this.updateIcon();
+        this.btn?.addEventListener('click', () => this.toggle());
+    }
+    current() {
+        return this.root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    }
+    toggle() {
+        const next = this.current() === 'dark' ? 'light' : 'dark';
+        this.root.setAttribute('data-theme', next);
+        try { localStorage.setItem('cv-theme', next); } catch (e) {}
+        this.updateIcon();
+    }
+    updateIcon() {
+        if (!this.icon) return;
+        this.icon.innerHTML = this.current() === 'dark'
+            ? '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>'
+            : '<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>';
+    }
+}
 // Main application controller
 class CVApplication {
     constructor() {
+        this.themeManager = new ThemeManager();
         this.navigationManager = new NavigationManager();
         this.animationManager = new AnimationManager();
         this.modalManager = new ModalManager();

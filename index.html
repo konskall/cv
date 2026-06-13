@@ -4,6 +4,8 @@
     <title>Καλλιακούδης Κωνσταντίνος - CV &amp; Portfolio</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Apply saved/system theme before paint to avoid flash -->
+    <script>(function(){try{var t=localStorage.getItem('cv-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
     <meta name="description" content="Καλλιακούδης Κωνσταντίνος - E-commerce Specialist CV & Portfolio">
     <meta name="keywords" content="Product Content Coordinator, E-commerce Specialist, CV, Portfolio, Pharm24, Σπάρτη, e-commerce, product management, SEO, content coordinator, data analysis, team leadership, pharmacy">
     <meta name="author" content="Καλλιακούδης Κωνσταντίνος">
@@ -14,17 +16,17 @@
     <!-- Preload the LCP hero image so it starts before the CSS chain finishes -->
     <link rel="preload" as="image" href="img/profilepic.webp" fetchpriority="high">
     <!-- Fonts (only the weights actually used) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome — loaded non-blocking so it doesn't delay first paint -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
-	<link rel="icon" type="image/png" href="https://konskall.github.io/cv/favicon-96x96.png" sizes="96x96" />
-    <link rel="shortcut icon" href="https://konskall.github.io/cv/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="https://konskall.github.io/cv/apple-touch-icon.png" />
+	<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="KK CV" />
-    <link rel="manifest" href="https://konskall.github.io/cv/site.webmanifest" />
+    <link rel="manifest" href="site.webmanifest" />
 	<meta property="og:type" content="profile" />
     <meta property="og:title" content="Κωνσταντίνος Καλλιακούδης - E-commerce Specialist" />
     <meta property="og:description" content="Έμπειρος συντονιστής περιεχομένου e-commerce με ειδίκευση σε φαρμακείο, SEO on-page, ενημερώσεις τιμών/προωθήσεων και διαλειτουργία ERP-CMS. Ηγούμαι ομάδας 3 ατόμων για ταχεία και ακριβή καταχώρηση 20.000+ κωδικών." />
@@ -47,8 +49,9 @@
     <!-- General Meta Tags -->
     <meta name="copyright" content="© 2025 Κωνσταντίνος Καλλιακούδης. All rights reserved." />
     <!-- Theme Color (Teal - Matching your brand) -->
-    <meta name="theme-color" content="#218085" />
-    <meta name="msapplication-TileColor" content="#218085" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#EEF2F8" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0A1525" />
+    <meta name="msapplication-TileColor" content="#0F2036" />
     <!-- Robots Meta Tags -->
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
@@ -85,23 +88,28 @@
 <link rel="canonical" href="https://konskall.github.io/cv/" />
 </head>
 <body>
+    <div class="bgfx" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-container">
-                <div class="logo">Βιογραφικό Σημείωμα</div>
+                <div class="logo">Κ. Καλλιακούδης</div>
                 <ul class="nav-menu">
-                   <!-- <li><a href="#home" class="nav-link active">Αρχική</a></li>  Αφαιρέθηκε το "Αρχική" -->
                     <li><a href="#experience" class="nav-link">Εμπειρία</a></li>
                     <li><a href="#skills" class="nav-link">Δεξιότητες</a></li>
                     <li><a href="#education" class="nav-link">Εκπαίδευση</a></li>
                     <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                     <li><a href="#contact" class="nav-link">Επικοινωνία</a></li>
                 </ul>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <div class="nav-tools">
+                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Εναλλαγή φωτεινού / σκοτεινού θέματος">
+                        <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+                    </button>
+                    <button class="hamburger" type="button" aria-label="Άνοιγμα μενού" aria-expanded="false">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -595,6 +603,12 @@
                     </h3>
 				<div class="edu-cert-grid">
 					<div class="edu-item">
+                        <h4 class="degree">AI Automations &amp; Ηλεκτρονικό Εμπόριο</h4>
+                        <p class="institution">Οικονομικό Πανεπιστήμιο Αθηνών - GR.EC.A.</p>
+                        <p class="period" style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">2026</p>
+                        <p style="margin-top: var(--space-8); color: var(--color-text-secondary);">Πρόκειται για ένα πρόγραμμα το οποίο σχεδιάστηκε με την επιστημονική ευθύνη του Εργαστηρίου Ηλεκτρονικού Εμπορίου και Επιχειρείν-ELTRUN του Οικονομικού Πανεπιστημίου Αθηνών, και έχει ως στόχο την εκπαίδευση των στελεχών των επιχειρήσεων σε θέματα που αφορούν AI Automations και Ηλεκτρονικό Εμπόριο.</p>
+                    </div>
+                    <div class="edu-item">
                         <h4 class="degree">Executive eCommerce Certification</h4>
                         <p class="institution">Οικονομικό Πανεπιστήμιο Αθηνών - GR.EC.A.</p>
                         <p class="period" style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">2026</p>
