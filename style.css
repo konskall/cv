@@ -258,6 +258,19 @@ img { max-width: 100%; display: block; }
 }
 .theme-toggle:hover { background: var(--color-bg-3); transform: rotate(15deg); }
 
+/* Language toggle (EN / ΕΛ) */
+.lang-toggle {
+  height: 40px; min-width: 40px; padding: 0 12px; flex-shrink: 0;
+  border-radius: var(--radius-full); cursor: pointer;
+  border: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-surface) 50%, transparent);
+  color: var(--color-text); font-family: var(--font-body);
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; line-height: 1;
+  display: grid; place-items: center;
+  transition: background var(--duration-fast) ease, color var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+.lang-toggle:hover { background: var(--color-bg-3); color: var(--color-primary); transform: translateY(-1px); }
+
 /* Hamburger */
 .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border: none; background: none; }
 .hamburger span { width: 24px; height: 2px; border-radius: 2px; background: var(--color-text); transition: transform var(--duration-normal) var(--ease-standard), opacity var(--duration-fast) ease; }
@@ -527,7 +540,7 @@ textarea.form-control { resize: vertical; min-height: 130px; }
    Print
    ============================================================ */
 @media print {
-  .navbar, .hero-buttons, .scroll-to-top-btn, .modal, .skill-hover-indicator, .bgfx, .theme-toggle, .hamburger { display: none !important; }
+  .navbar, .hero-buttons, .scroll-to-top-btn, .modal, .skill-hover-indicator, .bgfx, .theme-toggle, .lang-toggle, .hamburger { display: none !important; }
   body { background: #fff; color: #000; }
   body::after { display: none; }
   .section { opacity: 1 !important; transform: none !important; page-break-inside: avoid; box-shadow: none; }

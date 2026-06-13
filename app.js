@@ -1,5 +1,45 @@
-// Experience details data
-const experienceDetails = [
+// Current UI language helper (driven by <html lang> set by LanguageManager)
+function currentLang() {
+    return document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'el';
+}
+// UI strings (toasts, validation, modal labels) in both languages
+const MSG = {
+    el: {
+        enterName: 'Παρακαλώ εισάγετε το όνομά σας',
+        validEmail: 'Παρακαλώ εισάγετε έγκυρο email',
+        enterSubject: 'Παρακαλώ εισάγετε θέμα',
+        enterMessage: 'Παρακαλώ εισάγετε μήνυμα',
+        captchaLoading: 'Το captcha φορτώνει ακόμη, δοκιμάστε ξανά σε λίγο.',
+        captchaComplete: 'Παρακαλώ ολοκληρώστε το captcha!',
+        sendError: 'Σφάλμα κατά την αποστολή. Δοκιμάστε ξανά.',
+        sendErrorShort: 'Σφάλμα κατά την αποστολή',
+        shareText: 'Δείτε το CV μου',
+        copied: '✔️ Αντιγράφηκε!',
+        copyError: '❌ Σφάλμα',
+        level: 'Επίπεδο:',
+        toolsTitle: 'Εργαλεία & Τεχνολογίες:'
+    },
+    en: {
+        enterName: 'Please enter your name',
+        validEmail: 'Please enter a valid email',
+        enterSubject: 'Please enter a subject',
+        enterMessage: 'Please enter a message',
+        captchaLoading: 'The captcha is still loading, please try again shortly.',
+        captchaComplete: 'Please complete the captcha!',
+        sendError: 'Error while sending. Please try again.',
+        sendErrorShort: 'Error while sending',
+        shareText: 'Check out my CV',
+        copied: '✔️ Copied!',
+        copyError: '❌ Error',
+        level: 'Level:',
+        toolsTitle: 'Tools & Technologies:'
+    }
+};
+function t(key) { return MSG[currentLang()][key]; }
+
+// Experience details data (per language)
+const experienceDetails = {
+    el: [
     {
         title: "Product Content Coordinator",
         company: "Pharm24.gr",
@@ -83,9 +123,96 @@ const experienceDetails = [
             "Δρομολόγια εντός Ελλάδας"
         ]
     }
-];
-// Skill details data
-const skillDetailsData = [
+    ],
+    en: [
+    {
+        title: "Product Content Coordinator",
+        company: "Pharm24.gr",
+        period: "09/2024 - Present",
+        description: "Content management at an online pharmacy with over 20,000 products - Sparta, Laconia",
+        responsibilities: [
+            "Coordinator of a 3-person team",
+            "Managing and delegating responsibilities to team members",
+            "Daily review and correction of products listed on the e-shop",
+            "Enabling and disabling discount plans",
+            "Updating and refreshing prices based on price lists",
+            "Managing the gift & sample policy in the shopping cart",
+            "Implementing SEO strategy"
+        ]
+    },
+    {
+        title: "Data Entry Agent",
+        company: "Pharm24.gr",
+        period: "05/2023 - 09/2024",
+        description: "Entering new products and editing product content at an online pharmacy with over 20,000 products - Sparta, Laconia",
+        responsibilities: [
+            "Reworking content for dietary-supplement brands",
+            "500%+ increase in views/purchases through improved content",
+            "Creating product codes (medicines & parapharmaceuticals)",
+            "SEO optimization for better visibility in search results"
+        ]
+    },
+    {
+        title: "Store Manager",
+        company: "Kalliakoudis Delicatessen",
+        period: "09/2018 - 05/2023",
+        description: "Delicatessen store with a variety of cheeses and traditional products - Sparta",
+        responsibilities: [
+            "Full store management",
+            "Inventory and supplier management",
+            "Order processing and customer service",
+            "Continuously monitoring industry developments and competition, as well as seeking new customers",
+            "Monitoring and organizing stock, orders and deliveries",
+            "Cash management"
+        ]
+    },
+    {
+        title: "Dairy Zone Coordinator",
+        company: "Kalliakoudis Raw Milk Trade",
+        period: "12/2014 - 08/2018",
+        description: "Collection and trade of fresh raw milk",
+        responsibilities: [
+            "Collecting fresh milk with specialized equipment",
+            "Storage and quality control of raw milk",
+            "Organizing the milk zone (scheduling - routes - collection points)",
+            "Delivering products to small dairy producers and processors",
+            "Issuing sales and purchase documents",
+            "Taking customer orders",
+            "Closing deals",
+            "Managing ELOGAK data",
+            "Monitoring competition"
+        ]
+    },
+    {
+        title: "HACCP Supervisor",
+        company: "Gerasimos Kalliakoudis & Co.",
+        period: "12/2012 - 12/2014",
+        description: "Manager of a certified HACCP food safety system",
+        responsibilities: [
+            "Training and informing staff on food safety",
+            "Monitoring and analyzing hazards at critical control points",
+            "Ensuring compliance with hygiene standards",
+            "Record keeping"
+        ]
+    },
+    {
+        title: "Business Owner - Self Employed",
+        company: "Kalliakoudis K. Trans",
+        period: "08/2010 - 11/2012",
+        description: "Freight transport company with a Public Use license",
+        responsibilities: [
+            "Transporting palletized & bulk goods, raw materials, industrial products & animal feed",
+            "Cooperating with logistics hubs, warehouses & factories",
+			"Certification for transporting animal feed",
+			"Available for long-term B2B partnerships and contracts",
+            "Routes within Greece"
+        ]
+    }
+    ]
+};
+// Skill details data (per language)
+const skillDetailsData = {
+    el: [
     {
         name: "Excel",
         level: "Εξειδικευμένο",
@@ -103,7 +230,7 @@ const skillDetailsData = [
     {
         name: "Entersoft",
         level: "Προχωρημένο",
-        experience: "2+ έτη εμπειρίας",
+        experience: "3+ έτη εμπειρίας",
         description: "Integration με e-shop για stock και pricing updates",
         achievements: [
             "Διαχείριση inventory sync μεταξύ physical stores και e-shop",
@@ -128,7 +255,7 @@ const skillDetailsData = [
     },
     {
         name: "Photoshop & Lightroom",
-        level: "Προχωρημένο",
+        level: "Μεσαίο",
         experience: "3+ έτη εμπειρίας",
         description: "Βασική επεξεργασία εικόνων για e-shop",
         achievements: [
@@ -181,7 +308,7 @@ const skillDetailsData = [
     },
 	{
         name: "SEO Strategy",
-        level: "Μεσαίο",
+        level: "Εξειδικευμένο",
         experience: "2+ έτη εμπειρίας",
         description: "Αύξηση προβολών >500% στα συμπληρώματα Pharm24.gr",
         achievements: [
@@ -207,7 +334,7 @@ const skillDetailsData = [
     },
     {
         name: "Inventory Sync",
-        level: "Προχωρημένο",
+        level: "Εξειδικευμένο",
         experience: "2+ έτη εμπειρίας",
         description: "Συγχρονισμός φυσικών καταστημάτων και ηλεκτρονικού καταστήματος",
         achievements: [
@@ -299,7 +426,223 @@ const skillDetailsData = [
         ],
         tools: ["Επαγγελματική Επικοινωνία", "Τεχνική Ανάγνωση", "Δεξιότητες Έρευνας", "Τεκμηρίωση"]
     }
-];
+    ],
+    en: [
+    {
+        name: "Excel",
+        level: "Expert",
+        experience: "5+ years of experience",
+        certification: "ECDL Expert (EL200638866KK)",
+        description: "Daily use for price management and data analysis at Pharm24.gr",
+        achievements: [
+            "Creating pivot tables to analyze prices of 20,000+ products",
+            "Automating price lists with lookup functions",
+            "Weekly reporting for price comparisons and margins",
+            "Integrating Excel data with the Prisma Win ERP system"
+        ],
+        tools: ["Pivot Tables", "VLOOKUP/XLOOKUP", "Data Validation", "Conditional Formatting", "Macros"]
+    },
+    {
+        name: "Entersoft",
+        level: "Advanced",
+        experience: "3+ years of experience",
+        description: "Integration with the e-shop for stock and pricing updates",
+        achievements: [
+            "Managing inventory sync between physical stores and the e-shop",
+            "Creating new codes and managing medicine/parapharmaceutical codes",
+            "Updating prices on the e-shop based on supplier price lists",
+            "Real-time stock monitoring"
+        ],
+        tools: ["Bulk Record Editing", "Price Synchronization", "Product Coding", "Stock Monitoring"]
+    },
+	{
+        name: "Prisma Win (Megasoft)",
+        level: "Advanced",
+        experience: "8+ years of experience",
+        description: "Stock, invoicing, customer accounts",
+        achievements: [
+            "Inventory management",
+            "Issuing documents",
+            "Customer accounts",
+            "Statistics"
+        ],
+        tools: ["Inventory Management", "Customer Accounts", "Document Issuing", "Sales Statistics"]
+    },
+    {
+        name: "Photoshop & Lightroom",
+        level: "Intermediate",
+        experience: "3+ years of experience",
+        description: "Basic image editing for the e-shop",
+        achievements: [
+            "Soft editing of product photos",
+            "Creating product badges",
+            "Creating banners",
+            "Photographing products and editing the photos"
+        ],
+        tools: ["Scripts", "Badges", "Background", "File types"]
+    },
+	//  E-commerce skills
+   {
+        name: "Product Management",
+        level: "Expert",
+        experience: "2+ years of experience",
+        description: "20,000+ products at Pharm24.gr, team coordination",
+        achievements: [
+            "Listing and enriching 20,000+ pharmaceutical products",
+            "Quality control processes for product information accuracy",
+            "Coordinating a 3-person content team",
+            "Product categorization and attribute management"
+        ],
+        tools: ["Product Cataloging", "Quality Assurance", "Team Management", "Data Validation"]
+    },
+   {
+        name: "Price Management",
+        level: "Expert",
+        experience: "2+ years of experience",
+        description: "Weekly price updates, enabling/disabling discount plans",
+        achievements: [
+            "Weekly price-list updates from 50+ suppliers",
+            "Promotional campaign setup and monitoring",
+            "Discount policy management for gift/sample programs",
+            "Price comparison analysis for competitive positioning"
+        ],
+        tools: ["Price Monitoring", "Promotional Campaigns", "Discount Management", "Competitor Analysis"]
+    },
+	{
+        name: "Content Strategy",
+        level: "Advanced",
+        experience: "2+ years of experience",
+        description: "Restructuring the e-shop presentation of dietary supplements, SEO optimization",
+        achievements: [
+            "Reworking brand pages for strategic partners",
+            "Improving product descriptions for SEO and conversions",
+            "Content compliance with pharmaceutical regulations",
+            "Brand storytelling and product positioning"
+        ],
+        tools: ["Content Writing", "Brand Management", "SEO Content", "Compliance Writing"]
+    },
+	{
+        name: "SEO Strategy",
+        level: "Expert",
+        experience: "2+ years of experience",
+        description: "500%+ increase in views for Pharm24.gr supplements",
+        achievements: [
+            "On-page optimization for 4 core supplement brands",
+            "Meta descriptions and title tags optimization",
+            "Keyword research for products and brands",
+            "Restructuring content for better search visibility"
+        ],
+        tools: ["On-page SEO", "Meta Tags", "Keyword Research", "Content Optimization", "Semrush", "Google Search Console"]
+    },
+	{
+        name: "Marketing Strategy",
+        level: "Intermediate",
+        experience: "2+ years of experience",
+        description: "Implementing the marketing plan at Pharm24.gr",
+        achievements: [
+            "Gift and sample strategy",
+            "Product presentation and promotion",
+            "Competition monitoring",
+            "Restructuring content for better search visibility"
+        ],
+        tools: ["Google Analytics", "Hotjar", "Keyword Research", "Content Optimization", "Canva"]
+    },
+    {
+        name: "Inventory Sync",
+        level: "Expert",
+        experience: "2+ years of experience",
+        description: "Synchronizing physical stores and the e-shop",
+        achievements: [
+            "Real-time inventory synchronization across channels",
+            "Stock monitoring for medicines with expiry dates",
+            "Low-stock alert system",
+            "Multi-location inventory management"
+        ],
+        tools: ["ERP Integration", "Stock Monitoring", "Multi-channel Sync", "Inventory Alerts"]
+    },
+    {
+        name: "Team Leadership",
+        level: "Advanced",
+        experience: "1+ year of experience",
+        description: "Leading a 3-person team for product entry on the e-shop",
+        achievements: [
+            "Managing and coordinating a 3-person content team",
+            "Assigning tasks and managing priorities",
+            "Daily quality control and performance monitoring",
+            "Training new members on entering new products"
+        ],
+        tools: ["Team Coordination", "Task Management", "Quality Control", "Training & Development", "Clockify"]
+    },
+    {
+        name: "Project Management",
+        level: "Intermediate",
+        experience: "3+ years of experience",
+        description: "Store operations, product launches, system implementation",
+        achievements: [
+            "Store setup and operations management for a delicatessen",
+            "Coordinating new product launches",
+            "Implementing systems for POS, inventory, weighing and invoicing",
+            "Managing supplier relationships"
+        ],
+        tools: ["Resource Management", "Schedule Management", "Stakeholder Updates", "Process Design"]
+    },
+    {
+        name: "Process Optimization",
+        level: "Intermediate",
+        experience: "5+ years of experience",
+        description: "Streamlining receiving/shipping processes, automating repetitive tasks, cost-effective solutions",
+        achievements: [
+            "Identifying critical processes that need improvement",
+            "Workflow mapping",
+            "Minimizing cycle time (faster turnover)",
+            "Establishing quality standards for content accuracy"
+        ],
+        tools: ["Process Analysis", "Quality Standards", "Workflow Design", "Efficiency Optimization"]
+    },
+    {
+        name: "Delegation & Task Assignment",
+        level: "Advanced",
+        experience: "",
+        description: "Motivating and boosting performance, creating a positive work environment, effective resource allocation",
+        achievements: [
+            "Priority Management",
+            "Performance Monitoring",
+            "Training",
+            "Distributing tasks according to each member's skills",
+			"Analyzing performance data (using tools such as Clockify)",
+			"Assigning deadlines and deliverables"
+        ],
+        tools: ["Professional Writing", "Customer Communication", "Content Creation", "Documentation"]
+    },
+	// Languages
+	{
+        name: "Greek",
+        level: "Native",
+        experience: "",
+        description: "Professional language of communication, content creation",
+        achievements: [
+            "Professional content writing for parapharmaceutical products",
+            "Customer communication and support",
+            "Product descriptions and advertising copy",
+            "Documentation"
+        ],
+        tools: ["Professional Writing", "Customer Communication", "Content Creation", "Documentation"]
+    },
+    {
+        name: "English",
+        level: "Intermediate (B2 Certified - Good command)",
+        experience: "State Certificate of Language Proficiency - Registry No.: KB/16028",
+        description: "Professional language of communication, content creation",
+        achievements: [
+            "Communicating with international suppliers of pharmaceutical and parapharmaceutical products",
+            "Reading and applying technical manuals",
+            "Online research for product information and trends",
+            "Writing English-language product descriptions for premium international brands"
+        ],
+        tools: ["Professional Communication", "Technical Reading", "Research Skills", "Documentation"]
+    }
+    ]
+};
 const throttle = (fn, delay) => {
   let lastCall = 0;
   return (...args) => {
@@ -337,14 +680,14 @@ class NavigationManager {
         this.navMenu?.classList.remove('active');
         this.hamburger?.setAttribute('aria-expanded', 'false');
     }
-	
+
     updateActiveLink() {
   const scrollPos = window.scrollY + 100;
   CACHED_DOM.sections.forEach(section => {
     const top = section.offsetTop;
     const bottom = top + section.offsetHeight;
     const id = section.getAttribute('id');
-    
+
     if (scrollPos >= top && scrollPos <= bottom) {
       CACHED_DOM.navLinks.forEach(link => link.classList.remove('active'));
       document.querySelector(`a[href="#${id}"]`)?.classList.add('active');
@@ -438,8 +781,8 @@ class ShareManager {
         // Δοκιμή native sharing
         if (navigator.share) {
             navigator.share({
-                title: this.pageTitle,
-                text: 'Δείτε το CV μου',
+                title: document.title,
+                text: t('shareText'),
                 url: this.pageUrl
             }).catch(err => console.log('Share cancelled'));
         } else {
@@ -453,7 +796,7 @@ class ShareManager {
 
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(url)
-                .then(() => this.showToast('✔️ Αντιγράφηκε!'))
+                .then(() => this.showToast(t('copied')))
                 .catch(() => this.fallbackCopy(url));
         } else {
             this.fallbackCopy(url);
@@ -467,14 +810,14 @@ class ShareManager {
         document.body.appendChild(textarea);
         textarea.focus();
         textarea.select();
-        
+
         try {
             document.execCommand('copy');
-            this.showToast('✔️ Αντιγράφηκε!');
+            this.showToast(t('copied'));
         } catch (err) {
-            this.showToast('❌ Σφάλμα');
+            this.showToast(t('copyError'));
         }
-        
+
         document.body.removeChild(textarea);
     }
     showToast(message) {
@@ -525,9 +868,14 @@ class ModalManager {
             }
         });
     }
+    // Remove any tools section injected by a previous skill modal
+    clearInjectedTools() {
+        this.modal?.querySelectorAll('.modal-tools').forEach(el => el.remove());
+    }
     showExperienceDetails(index) {
-        const details = experienceDetails[index];
+        const details = experienceDetails[currentLang()][index];
         if (!details) return;
+        this.clearInjectedTools();
         document.getElementById('modalTitle').textContent = details.title;
         document.getElementById('modalCompany').textContent = details.company;
         document.getElementById('modalPeriod').textContent = details.period;
@@ -542,28 +890,16 @@ class ModalManager {
         this.openModal();
     }
 showSkillDetails(index) {
-    const skill = skillDetailsData[index];
+    const skill = skillDetailsData[currentLang()][index];
     if (!skill) return;
+    this.clearInjectedTools();
     document.getElementById('modalTitle').textContent = skill.name;
-    document.getElementById('modalCompany').textContent = `Επίπεδο: ${skill.level}`;
+    document.getElementById('modalCompany').textContent = `${t('level')} ${skill.level}`;
     document.getElementById('modalPeriod').textContent = skill.experience + (skill.certification ? ` • ${skill.certification}` : '');
     document.getElementById('modalDescription').textContent = skill.description;
     const responsibilitiesList = document.getElementById('modalResponsibilities');
     responsibilitiesList.innerHTML = ''; // Καθαρισμός όλων των παλιών στοιχείων
-    // Βρες και σβήσε τα παλιά "Εργαλεία" headers και lists
     const modalContentParent = responsibilitiesList.parentNode;
-    const oldToolsHeaders = modalContentParent.querySelectorAll('h4');
-    const oldToolsLists = modalContentParent.querySelectorAll('div[style*="flex"]');
-    oldToolsHeaders.forEach(el => {
-        if (el.textContent.includes('Εργαλεία')) {
-            el.remove();
-        }
-    });
-    oldToolsLists.forEach(el => {
-        if (el.style.display === 'flex') {
-            el.remove();
-        }
-    });
     // Πρόσθεσε τα νέα achievements
     if (skill.achievements) {
         skill.achievements.forEach(achievement => {
@@ -575,10 +911,12 @@ showSkillDetails(index) {
     // Πρόσθεσε τα νέα tools
     if (skill.tools) {
         const toolsTitle = document.createElement('h4');
-        toolsTitle.textContent = 'Εργαλεία & Τεχνολογίες:';
+        toolsTitle.textContent = t('toolsTitle');
+        toolsTitle.className = 'modal-tools';
         toolsTitle.style.marginTop = 'var(--space-20)';
         modalContentParent.appendChild(toolsTitle);
         const toolsList = document.createElement('div');
+        toolsList.className = 'modal-tools';
         toolsList.style.display = 'flex';
         toolsList.style.flexWrap = 'wrap';
         toolsList.style.gap = 'var(--space-8)';
@@ -621,15 +959,15 @@ class ContactFormManager {
         console.log('ContactFormManager initialized');
         this.init();
     }
-    
+
     init() {
         this.form?.addEventListener('submit', (e) => this.handleSubmit(e));
     }
-    
+
     handleSubmit(e) {
         e.preventDefault();
         console.log('Form submitted');
-        
+
         const formData = new FormData(this.form);
         const data = {
             name: formData.get('name'),
@@ -637,52 +975,52 @@ class ContactFormManager {
             subject: formData.get('subject'),
             message: formData.get('message')
         };
-        
+
         if (!this.validateForm(data)) {
             return;
         }
-        
+
         this.simulateSubmission();
     }
-    
+
     validateForm(data) {
         const { name, email, subject, message } = data;
-        
+
         if (!name.trim()) {
-            this.showError('Παρακαλώ εισάγετε το όνομά σας');
+            this.showError(t('enterName'));
             return false;
         }
         if (!email.trim() || !this.isValidEmail(email)) {
-            this.showError('Παρακαλώ εισάγετε έγκυρο email');
+            this.showError(t('validEmail'));
             return false;
         }
         if (!subject.trim()) {
-            this.showError('Παρακαλώ εισάγετε θέμα');
+            this.showError(t('enterSubject'));
             return false;
         }
         if (!message.trim()) {
-            this.showError('Παρακαλώ εισάγετε μήνυμα');
+            this.showError(t('enterMessage'));
             return false;
         }
 
         // ✅ Έλεγχος reCAPTCHA
         if (typeof window.grecaptcha === 'undefined' || typeof window.grecaptcha.getResponse !== 'function') {
-            this.showError('Το captcha φορτώνει ακόμη, δοκιμάστε ξανά σε λίγο.');
+            this.showError(t('captchaLoading'));
             return false;
         }
         const token = window.grecaptcha.getResponse();
         if (!token || token.length === 0) {
-            this.showError('Παρακαλώ ολοκληρώστε το captcha!');
+            this.showError(t('captchaComplete'));
             return false;
         }
 
         return true;
     }
-    
+
     isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
-    
+
     showError(message) {
         let errorDiv = this.form.querySelector('.error-message');
         if (!errorDiv) {
@@ -703,16 +1041,16 @@ class ContactFormManager {
             }
         }, 3000);
     }
-    
+
     simulateSubmission() {
     const errorDiv = this.form.querySelector('.error-message');
     if (errorDiv) {
         errorDiv.remove();
     }
-    
+
     // Στέλνε στο Formspree
     const formData = new FormData(this.form);
-    
+
     fetch('https://formspree.io/f/mvgvbwno', {
         method: 'POST',
         body: formData,
@@ -728,12 +1066,12 @@ class ContactFormManager {
                 this.successMessage.style.display = 'none';
             }, 3000);
         } else {
-            this.showError('Σφάλμα κατά την αποστολή. Δοκιμάστε ξανά.');
+            this.showError(t('sendError'));
             if (window.grecaptcha) window.grecaptcha.reset();
         }
     })
     .catch(error => {
-        this.showError('Σφάλμα κατά την αποστολή');
+        this.showError(t('sendErrorShort'));
         console.error(error);
     });
 }
@@ -789,9 +1127,68 @@ class ThemeManager {
             : '<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>';
     }
 }
+// Language (Greek / English) manager
+class LanguageManager {
+    constructor() {
+        this.root = document.documentElement;
+        this.btn = document.getElementById('langToggle');
+        this.label = document.getElementById('langToggleLabel');
+        let stored = null;
+        try { stored = localStorage.getItem('cv-lang'); } catch (e) {}
+        this.lang = (stored === 'en' || stored === 'el') ? stored : 'el';
+        this.captureOriginals();
+        this.init();
+    }
+    // Snapshot the original (Greek) content so we can switch back to it
+    captureOriginals() {
+        document.querySelectorAll('[data-en]').forEach(el => {
+            if (el.dataset.el === undefined) el.dataset.el = el.innerHTML;
+        });
+        document.querySelectorAll('[data-en-aria]').forEach(el => {
+            if (el.dataset.elAria === undefined) el.dataset.elAria = el.getAttribute('aria-label') || '';
+        });
+        document.querySelectorAll('[data-en-title]').forEach(el => {
+            if (el.dataset.elTitle === undefined) el.dataset.elTitle = el.getAttribute('title') || '';
+        });
+    }
+    init() {
+        this.apply(this.lang);
+        this.btn?.addEventListener('click', () => this.toggle());
+    }
+    current() { return this.lang; }
+    toggle() {
+        this.apply(this.lang === 'el' ? 'en' : 'el');
+    }
+    apply(lang) {
+        this.lang = lang;
+        try { localStorage.setItem('cv-lang', lang); } catch (e) {}
+        this.root.setAttribute('lang', lang);
+        const en = lang === 'en';
+        // innerHTML overrides
+        document.querySelectorAll('[data-en]').forEach(el => {
+            el.innerHTML = en ? el.dataset.en : el.dataset.el;
+        });
+        // aria-label overrides
+        document.querySelectorAll('[data-en-aria]').forEach(el => {
+            el.setAttribute('aria-label', en ? el.dataset.enAria : el.dataset.elAria);
+        });
+        // title overrides
+        document.querySelectorAll('[data-en-title]').forEach(el => {
+            el.setAttribute('title', en ? el.dataset.enTitle : el.dataset.elTitle);
+        });
+        // Document title
+        document.title = en
+            ? 'Konstantinos Kalliakoudis - CV & Portfolio'
+            : 'Καλλιακούδης Κωνσταντίνος - CV & Portfolio';
+        // Toggle button shows the language you can switch TO
+        if (this.label) this.label.textContent = en ? 'ΕΛ' : 'EN';
+        if (this.btn) this.btn.setAttribute('aria-label', en ? 'Αλλαγή σε Ελληνικά' : 'Switch to English');
+    }
+}
 // Main application controller
 class CVApplication {
     constructor() {
+        this.languageManager = new LanguageManager();
         this.themeManager = new ThemeManager();
         this.navigationManager = new NavigationManager();
         this.animationManager = new AnimationManager();
@@ -868,10 +1265,10 @@ class ScrollToTopButton {
 
     scrollToTop(e) {
         e.preventDefault();
-        
+
         // ✨ NEW: Reset URL to root without hash
         history.replaceState(null, '', window.location.pathname);
-        
+
         // Smooth scroll to top
         window.scrollTo({
             top: 0,
