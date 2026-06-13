@@ -7,16 +7,20 @@
     <meta name="description" content="Καλλιακούδης Κωνσταντίνος - E-commerce Specialist CV & Portfolio">
     <meta name="keywords" content="Product Content Coordinator, E-commerce Specialist, CV, Portfolio, Pharm24, Σπάρτη, e-commerce, product management, SEO, content coordinator, data analysis, team leadership, pharmacy">
     <meta name="author" content="Καλλιακούδης Κωνσταντίνος">
-    <!-- Fonts -->
+    <!-- Preconnect to third-party origins on the critical path -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <!-- Preload the LCP hero image so it starts before the CSS chain finishes -->
+    <link rel="preload" as="image" href="img/profilepic.webp" fetchpriority="high">
+    <!-- Fonts (only the weights actually used) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome — loaded non-blocking so it doesn't delay first paint -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 	<link rel="icon" type="image/png" href="https://konskall.github.io/cv/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="https://konskall.github.io/cv/favicon.svg" />
     <link rel="shortcut icon" href="https://konskall.github.io/cv/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="https://konskall.github.io/cv/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="KK CV" />
@@ -63,8 +67,7 @@
     "name": "Pharm24.gr"
   },
   "sameAs": [
-    "http://linkedin.com/in/konstantinos-kalliakoudis-902b90103",
-    "https://konskall.github.io/cv/"
+    "https://www.linkedin.com/in/konstantinos-kalliakoudis-902b90103"
   ],
   "email": "konskall@gmail.com",
   "telephone": "+306983033004",
@@ -119,7 +122,7 @@
                 <div class="hero-visual">
                     <div class="profile-card">
                         <div class="profile-avatar">
-                            <img src="img/profilepic.webp" alt="Καλλιακούδης Κωνσταντίνος" class="profile-photo">
+                            <img src="img/profilepic.webp" alt="Καλλιακούδης Κωνσταντίνος" class="profile-photo" width="1024" height="1536" fetchpriority="high" decoding="async">
                         </div>
                         <div class="contact-info">
                             <div class="contact-item">
@@ -516,7 +519,7 @@
                     <div class="skills-badges">
                         <div class="skill-badge language" onclick="showSkillDetails(14)">
                             <div class="skill-badge-header">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Greece.svg" alt="Ελληνική σημαία" style="width:24px; height:16px;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Greece.svg" alt="Ελληνική σημαία" style="width:24px; height:16px;" loading="lazy" decoding="async">
                                 <div class="skill-info">
                                     <h4 class="skill-name">Ελληνικά</h4>
                                     <span class="skill-level native">Μητρική γλώσσα</span>
@@ -531,8 +534,8 @@
 
                         <div class="skill-badge language" onclick="showSkillDetails(15)">
                             <div class="skill-badge-header">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="Αμερικανική σημαία" style="width:28px; height:20px;">
-								<img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="Βρετανική σημαία" style="width:30px; height:22px;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="Αμερικανική σημαία" style="width:28px; height:20px;" loading="lazy" decoding="async">
+								<img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="Βρετανική σημαία" style="width:30px; height:22px;" loading="lazy" decoding="async">
                                 <div class="skill-info">
                                     <h4 class="skill-name">Αγγλικά</h4>
                                     <span class="skill-level intermediate certified">Μεσαίο (Β2 Certified - Καλή γνώση)</span>
@@ -818,9 +821,9 @@
     </section>
 
     <!-- Modal for Experience & Skill Details -->
-    <div id="experienceModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div id="experienceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-content">
-            <span class="close" aria-label="Κλείσιμο">&times;</span>
+            <span class="close" role="button" tabindex="0" aria-label="Κλείσιμο">&times;</span>
             <h2 id="modalTitle"></h2>
             <h3 id="modalCompany"></h3>
             <p id="modalPeriod"></p>

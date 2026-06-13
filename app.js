@@ -410,14 +410,11 @@ class AnimationManager {
         }
     }
     initProfilePulse() {
-        setInterval(() => {
-            const avatar = document.querySelector('.profile-avatar');
-            if (avatar) {
-                avatar.classList.add('animate-pulse');
-                setTimeout(() => {
-                    avatar.classList.remove('animate-pulse');
-                }, 2000);
-            }
+        const avatar = document.querySelector('.profile-avatar');
+        if (!avatar) return;
+        this.pulseInterval = setInterval(() => {
+            avatar.classList.add('animate-pulse');
+            setTimeout(() => avatar.classList.remove('animate-pulse'), 2000);
         }, 5000);
     }
 }
@@ -489,8 +486,10 @@ class ShareManager {
         toast.style.padding = '10px 15px';
         toast.style.borderRadius = '6px';
         toast.style.position = 'fixed';
-        toast.style.bottom = '22px';
-        toast.style.right = '30%';
+        toast.style.bottom = '80px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.maxWidth = '90vw';
         toast.style.zIndex = '10000';
         toast.style.fontSize = '14px';
         document.body.appendChild(toast);
@@ -506,8 +505,19 @@ class ModalManager {
     }
     init() {
         this.closeBtn?.addEventListener('click', () => this.closeModal());
+        this.closeBtn?.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                this.closeModal();
+            }
+        });
         window.addEventListener('click', (event) => {
             if (event.target === this.modal) {
+                this.closeModal();
+            }
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && this.modal && this.modal.style.display === 'block') {
                 this.closeModal();
             }
         });
@@ -586,13 +596,18 @@ showSkillDetails(index) {
     this.openModal();
 }
     openModal() {
+        this.lastFocused = document.activeElement;
         this.modal.style.display = 'block';
+        this.modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        this.closeBtn?.focus();
     }
 
     closeModal() {
         this.modal.style.display = 'none';
+        this.modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = 'auto';
+        this.lastFocused?.focus?.();
     }
 }
 // Contact form manager
@@ -648,9 +663,11 @@ class ContactFormManager {
         }
 
         // ✅ Έλεγχος reCAPTCHA
-        const token = window.grecaptcha?.getResponse();
-        console.log('reCAPTCHA token:', token);
-        
+        if (typeof window.grecaptcha === 'undefined' || typeof window.grecaptcha.getResponse !== 'function') {
+            this.showError('Το captcha φορτώνει ακόμη, δοκιμάστε ξανά σε λίγο.');
+            return false;
+        }
+        const token = window.grecaptcha.getResponse();
         if (!token || token.length === 0) {
             this.showError('Παρακαλώ ολοκληρώστε το captcha!');
             return false;
@@ -707,6 +724,9 @@ class ContactFormManager {
             setTimeout(() => {
                 this.successMessage.style.display = 'none';
             }, 3000);
+        } else {
+            this.showError('Σφάλμα κατά την αποστολή. Δοκιμάστε ξανά.');
+            if (window.grecaptcha) window.grecaptcha.reset();
         }
     })
     .catch(error => {
@@ -734,13 +754,8 @@ class NavbarManager {
         this.handleScroll();
     }
     handleScroll() {
-        if (window.scrollY > 50) {
-            this.navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            this.navbar.style.boxShadow = 'var(--shadow-sm)';
-        } else {
-            this.navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            this.navbar.style.boxShadow = 'none';
-        }
+        // Toggle a class instead of inline colors so dark-mode CSS can take over
+        this.navbar?.classList.toggle('scrolled', window.scrollY > 50);
     }
 }
 // Main application controller
@@ -758,6 +773,21 @@ class CVApplication {
     init() {
         this.attachEventListeners();
         this.exposeGlobalFunctions();
+        this.enableCardKeyboardAccess();
+    }
+    enableCardKeyboardAccess() {
+        // Make the click-only experience/skill cards reachable & operable by keyboard
+        const cards = document.querySelectorAll('.timeline-content, .skill-badge');
+        cards.forEach(card => {
+            if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+            if (!card.hasAttribute('role')) card.setAttribute('role', 'button');
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
     }
     attachEventListeners() {
   const handleScrollThrottled = throttle(() => {
@@ -780,9 +810,6 @@ class CVApplication {
         };
         window.showSkillDetails = (index) => {
             this.modalManager.showSkillDetails(index);
-        };
-        window.downloadCV = () => {
-            window.print();
         };
     }
 }
