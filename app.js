@@ -9,7 +9,6 @@ const MSG = {
         validEmail: 'Παρακαλώ εισάγετε έγκυρο email',
         enterSubject: 'Παρακαλώ εισάγετε θέμα',
         enterMessage: 'Παρακαλώ εισάγετε μήνυμα',
-        captchaLoading: 'Το captcha φορτώνει ακόμη, δοκιμάστε ξανά σε λίγο.',
         captchaComplete: 'Παρακαλώ ολοκληρώστε το captcha!',
         sendError: 'Σφάλμα κατά την αποστολή. Δοκιμάστε ξανά.',
         sendErrorShort: 'Σφάλμα κατά την αποστολή',
@@ -24,7 +23,6 @@ const MSG = {
         validEmail: 'Please enter a valid email',
         enterSubject: 'Please enter a subject',
         enterMessage: 'Please enter a message',
-        captchaLoading: 'The captcha is still loading, please try again shortly.',
         captchaComplete: 'Please complete the captcha!',
         sendError: 'Error while sending. Please try again.',
         sendErrorShort: 'Error while sending',
@@ -952,6 +950,14 @@ showSkillDetails(index) {
     }
 }
 // Contact form manager
+// reCAPTCHA v2 ("I'm not a robot" Checkbox) site key.
+// Άδειο string = το captcha είναι απενεργοποιημένο και η φόρμα δουλεύει κανονικά.
+// Για να το ενεργοποιήσεις: πάρε site key από https://www.google.com/recaptcha/admin
+// (τύπος: v2 Checkbox, domains: konskall.github.io + localhost) και βάλ' το εδώ —
+// το widget και ο έλεγχος ενεργοποιούνται αυτόματα, δεν χρειάζεται άλλη αλλαγή.
+// Αν το widget εμφανίσει "Invalid site key", ξανακάνε το άδειο ώστε να μη κολλήσει η φόρμα.
+const RECAPTCHA_SITE_KEY = '6LeSfJgtAAAAANvE9CzqEFcvbo85A7rBViVlFQMf';
+
 class ContactFormManager {
     constructor() {
         this.form = document.getElementById('contactForm');
@@ -962,6 +968,24 @@ class ContactFormManager {
 
     init() {
         this.form?.addEventListener('submit', (e) => this.handleSubmit(e));
+        this.setupRecaptcha();
+    }
+
+    // Φορτώνει το reCAPTCHA μόνο όταν υπάρχει ρυθμισμένο site key
+    setupRecaptcha() {
+        const container = document.getElementById('recaptchaContainer');
+        if (!container || !RECAPTCHA_SITE_KEY) return;
+
+        const widget = document.createElement('div');
+        widget.className = 'g-recaptcha';
+        widget.dataset.sitekey = RECAPTCHA_SITE_KEY;
+        container.appendChild(widget);
+
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
     }
 
     handleSubmit(e) {
@@ -1003,14 +1027,8 @@ class ContactFormManager {
             return false;
         }
 
-        // ✅ Έλεγχος reCAPTCHA
-        if (typeof window.grecaptcha === 'undefined' || typeof window.grecaptcha.getResponse !== 'function') {
-            this.showError(t('captchaLoading'));
-            return false;
-        }
-        const token = window.grecaptcha.getResponse();
-        if (!token || token.length === 0) {
-            this.showError(t('captchaComplete'));
+        // ✅ Έλεγχος reCAPTCHA — μόνο όταν υπάρχει ρυθμισμένο site key
+        if (RECAPTCHA_SITE_KEY && !this.hasValidCaptcha()) {
             return false;
         }
 
@@ -1019,6 +1037,32 @@ class ContactFormManager {
 
     isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // true αν το captcha συμπληρώθηκε, ή αν το script δεν φόρτωσε καθόλου
+    // (fail-open: προτιμότερο να περάσει το μήνυμα παρά να κολλήσει η φόρμα)
+    hasValidCaptcha() {
+        if (typeof window.grecaptcha?.getResponse !== 'function') return true;
+
+        let token;
+        try {
+            token = window.grecaptcha.getResponse();
+        } catch (e) {
+            return true; // δεν έχει γίνει render κανένα widget
+        }
+        if (!token) {
+            this.showError(t('captchaComplete'));
+            return false;
+        }
+        return true;
+    }
+
+    resetCaptcha() {
+        try {
+            window.grecaptcha?.reset();
+        } catch (e) {
+            /* δεν υπάρχει rendered widget */
+        }
     }
 
     showError(message) {
@@ -1060,14 +1104,14 @@ class ContactFormManager {
         if (response.ok) {
             this.successMessage.style.display = 'block';
             this.form.reset();
-            if (window.grecaptcha) window.grecaptcha.reset();
+            this.resetCaptcha();
 
             setTimeout(() => {
                 this.successMessage.style.display = 'none';
             }, 3000);
         } else {
             this.showError(t('sendError'));
-            if (window.grecaptcha) window.grecaptcha.reset();
+            this.resetCaptcha();
         }
     })
     .catch(error => {
