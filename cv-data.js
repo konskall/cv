@@ -275,7 +275,7 @@ window.CV_DATA.form = {
   endpoint: 'https://formspree.io/f/mvgvbwno',
   recaptchaKey: '6LeSfJgtAAAAANvE9CzqEFcvbo85A7rBViVlFQMf'
 };
-window.CV_DATA.interests = ['Web Development', 'Vibe Coding', 'Hardware Building', 'Ubuntu/Linux', 'E-commerce Optimization', 'Digital Marketing', 'SEO', 'Photography', 'Hiking', 'Astronomy', 'Music', 'Art', 'Cinema', 'Food and Beverage'];
+window.CV_DATA.interests = ['Web Development', 'Vibe Coding', 'Hardware Building', 'IoT', 'Ubuntu/Linux', 'E-commerce Optimization', 'Digital Marketing', 'SEO', 'Photography', 'Hiking', 'Astronomy', 'Music', 'Art', 'Cinema', 'Books', 'Food and Beverage'];
 
 Object.assign(window.CV_DATA.el, {
   ui: {
