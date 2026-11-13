@@ -1,1330 +1,426 @@
-// Current UI language helper (driven by <html lang> set by LanguageManager)
-function currentLang() {
-    return document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'el';
-}
-// UI strings (toasts, validation, modal labels) in both languages
-const MSG = {
-    el: {
-        enterName: 'Παρακαλώ εισάγετε το όνομά σας',
-        validEmail: 'Παρακαλώ εισάγετε έγκυρο email',
-        enterSubject: 'Παρακαλώ εισάγετε θέμα',
-        enterMessage: 'Παρακαλώ εισάγετε μήνυμα',
-        captchaComplete: 'Παρακαλώ ολοκληρώστε το captcha!',
-        sendError: 'Σφάλμα κατά την αποστολή. Δοκιμάστε ξανά.',
-        sendErrorShort: 'Σφάλμα κατά την αποστολή',
-        shareText: 'Δείτε το CV μου',
-        copied: '✔️ Αντιγράφηκε!',
-        copyError: '❌ Σφάλμα',
-        level: 'Επίπεδο:',
-        toolsTitle: 'Εργαλεία & Τεχνολογίες:'
-    },
-    en: {
-        enterName: 'Please enter your name',
-        validEmail: 'Please enter a valid email',
-        enterSubject: 'Please enter a subject',
-        enterMessage: 'Please enter a message',
-        captchaComplete: 'Please complete the captcha!',
-        sendError: 'Error while sending. Please try again.',
-        sendErrorShort: 'Error while sending',
-        shareText: 'Check out my CV',
-        copied: '✔️ Copied!',
-        copyError: '❌ Error',
-        level: 'Level:',
-        toolsTitle: 'Tools & Technologies:'
-    }
-};
-function t(key) { return MSG[currentLang()][key]; }
+// Στήνει τη σελίδα από το περιεχόμενο του cv-data.js: τα φύλλα A4 του βιογραφικού,
+// τις κάρτες του portfolio και τα κείμενα του site στη γλώσσα που έχει επιλεγεί.
+// Επίσης: εναλλαγή γλώσσας και θέματος, μενού κινητού, φόρμα επικοινωνίας με
+// reCAPTCHA, κοινοποίηση και κουμπί επιστροφής στην κορυφή.
+//
+// Κανόνας για το έγγραφο: όλο το κείμενο ρέει σε μία στήλη, με τη σειρά του DOM.
+// Ημερομηνίες, ετικέτες και σύνδεσμοι μένουν μέσα στη γραμμή τους και όχι σε
+// ξεχωριστές στήλες, γιατί τα συστήματα ελέγχου βιογραφικών (ATS) διαβάζουν τις
+// στήλες χώρια και μπερδεύουν τη σειρά.
+(function () {
+  'use strict';
 
-// Experience details data (per language)
-const experienceDetails = {
-    el: [
-    {
-        title: "Product Content Coordinator",
-        company: "Pharm24.gr",
-        period: "09/2024 - Σήμερα",
-        description: "Διαχείριση περιεχομένου σε online φαρμακείο με πάνω από 20.000 προϊόντα - Σπάρτη Λακωνίας",
-        responsibilities: [
-            "Συντονιστής ομάδας 3 ατόμων",
-            "Διαχείριση & διαμοιρασμός αρμοδιοτήτων στα μέλη της ομάδας",
-            "Έλεγχος & διόρθωση καταχωρημένων προϊόντων καθημερινά στο e-shop",
-            "Ενεργοποίηση και απενεργοποίηση πλάνου εκπτώσεων",
-            "Ενημέρωση και ανανέωση τιμών βάση τιμοκαταλόγων",
-            "Διαχείριση πολιτικής δώρων & δειγμάτων στα καλάθια",
-            "Εφαρμογή στρατηγικής SEO"
-        ]
-    },
-    {
-        title: "Data Entry Agent",
-        company: "Pharm24.gr",
-        period: "05/2023 - 09/2024",
-        description: "Καταχώρηση νέων προϊόντων και επεξερασία προϊοντικού περιεχομένου σε online φαρμακείο με πάνω από 20.000 προϊόντα - Σπάρτη Λακωνίας",
-        responsibilities: [
-            "Αναμόρφωση περιεχομένου για τα brands συμπληρωμάτων διατροφής",
-            "Αύξηση προβολών/αγορών >500% μέσω βελτιωμένου περιεχομένου",
-            "Δημιουργία κωδικών προϊόντων (φάρμακα & παραφάρμακα)",
-            "SEO optimization για καλύτερη εμφάνιση στα αποτελέσματα αναζήτησης"
-        ]
-    },
-    {
-        title: "Store Manager",
-        company: "Καλλιακούδης Delicatessen",
-        period: "09/2018 - 05/2023",
-        description: "Κατάστημα delicatessen με ποικιλία τυριών και παραδοσιακών προϊόντων - Σπάρτη",
-        responsibilities: [
-            "Πλήρης διαχείριση καταστήματος",
-            "Διαχείριση αποθέματος και προμηθευτών",
-            "Επεξεργασία παραγγελιών και εξυπηρέτηση πελατών",
-            "Συνεχής παρακολούθηση των εξελίξεων του κλάδου, του ανταγωνισμού καθώς και αναζήτηση νέων πελατών",
-            "Παρακολούθηση και τακτοποίηση αποθεμάτων, παραγγελιών και παραλαβών",
-            "Διαχείριση ταμείου"
-        ]
-    },
-    {
-        title: "Dairy Zone Coordinator",
-        company: "Καλλιακούδης Raw Milk Trade",
-        period: "12/2014 - 08/2018",
-        description: "Συλλογή και εμπορία φρέσκου ανεπεξέργαστου γάλακτος",
-        responsibilities: [
-            "Συλλογή φρέσκου γάλακτος με ειδικά μέσα",
-            "Αποθήκευση και ποιοτικός έλεγχος νωπού γάλακτος",
-            "Οργάνωση ζώνης γάλακτος (προγραμματισμός - δρομολόγια - σημεία)",
-            "Παράδοση προϊόντων σε βιοτεχνίες",
-            "Έκδοση παραστατικών πωλήσεων και αγορών",
-            "Λήψη παραγγελιών πελατών",
-            "Κλείσιμο συμφωνιών",
-            "Διαχείριση δεδομένων ΕΛΟΓΑΚ",
-            "Παρακολούθηση ανταγωνισμού"
-        ]
-    },
-    {
-        title: "HACCP Supervisor",
-        company: "Γεράσιμος Καλλιακούδης & Σία ΟΕ",
-        period: "12/2012 - 12/2014",
-        description: "Διαχειριστής πιστοποιημένου συστήματος ασφάλειας τροφίμων HACCP",
-        responsibilities: [
-            "Εκπαίδευση και ενημέρωση του προσωπικού σχετικά με την ασφάλεια των τροφίμων",
-            "Παρακολούθηση και ανάλυση κινδύνων σε κρίσιμα σημεία ελέγχου",
-            "Διασφάλιση της συμμόρφωσης με τα πρότυπα υγιεινής",
-            "Τήρηση αρχείων"
-        ]
-    },
-    {
-        title: "Business Owner - Self Employed",
-        company: "Kalliakoudis K. Trans",
-        period: "08/2010 - 11/2012",
-        description: "Μεταφορική εταιρεία εμπορευμάτων με άδεια Δημοσίας Χρήσης",
-        responsibilities: [
-            "Μεταφορά παλετοποιημένων & χύμα προϊόντων, πρώτων υλών, βιομηχανικών προϊόντων & ζωοτροφών",
-            "Συνεργασία με κόμβους logistics, αποθήκες & εργοστάσια",
-			"Πιστοποίηση για μεταφορά ζωοτροφών",
-			"Δυνατότητα μόνιμης συνεργασίας B2B και συμβάσεων",
-            "Δρομολόγια εντός Ελλάδας"
-        ]
-    }
-    ],
-    en: [
-    {
-        title: "Product Content Coordinator",
-        company: "Pharm24.gr",
-        period: "09/2024 - Present",
-        description: "Content management at an online pharmacy with over 20,000 products - Sparta, Laconia",
-        responsibilities: [
-            "Coordinator of a 3-person team",
-            "Managing and delegating responsibilities to team members",
-            "Daily review and correction of products listed on the e-shop",
-            "Enabling and disabling discount plans",
-            "Updating and refreshing prices based on price lists",
-            "Managing the gift & sample policy in the shopping cart",
-            "Implementing SEO strategy"
-        ]
-    },
-    {
-        title: "Data Entry Agent",
-        company: "Pharm24.gr",
-        period: "05/2023 - 09/2024",
-        description: "Entering new products and editing product content at an online pharmacy with over 20,000 products - Sparta, Laconia",
-        responsibilities: [
-            "Reworking content for dietary-supplement brands",
-            "500%+ increase in views/purchases through improved content",
-            "Creating product codes (medicines & parapharmaceuticals)",
-            "SEO optimization for better visibility in search results"
-        ]
-    },
-    {
-        title: "Store Manager",
-        company: "Kalliakoudis Delicatessen",
-        period: "09/2018 - 05/2023",
-        description: "Delicatessen store with a variety of cheeses and traditional products - Sparta",
-        responsibilities: [
-            "Full store management",
-            "Inventory and supplier management",
-            "Order processing and customer service",
-            "Continuously monitoring industry developments and competition, as well as seeking new customers",
-            "Monitoring and organizing stock, orders and deliveries",
-            "Cash management"
-        ]
-    },
-    {
-        title: "Dairy Zone Coordinator",
-        company: "Kalliakoudis Raw Milk Trade",
-        period: "12/2014 - 08/2018",
-        description: "Collection and trade of fresh raw milk",
-        responsibilities: [
-            "Collecting fresh milk with specialized equipment",
-            "Storage and quality control of raw milk",
-            "Organizing the milk zone (scheduling - routes - collection points)",
-            "Delivering products to small dairy producers and processors",
-            "Issuing sales and purchase documents",
-            "Taking customer orders",
-            "Closing deals",
-            "Managing ELOGAK data",
-            "Monitoring competition"
-        ]
-    },
-    {
-        title: "HACCP Supervisor",
-        company: "Gerasimos Kalliakoudis & Co.",
-        period: "12/2012 - 12/2014",
-        description: "Manager of a certified HACCP food safety system",
-        responsibilities: [
-            "Training and informing staff on food safety",
-            "Monitoring and analyzing hazards at critical control points",
-            "Ensuring compliance with hygiene standards",
-            "Record keeping"
-        ]
-    },
-    {
-        title: "Business Owner - Self Employed",
-        company: "Kalliakoudis K. Trans",
-        period: "08/2010 - 11/2012",
-        description: "Freight transport company with a Public Use license",
-        responsibilities: [
-            "Transporting palletized & bulk goods, raw materials, industrial products & animal feed",
-            "Cooperating with logistics hubs, warehouses & factories",
-			"Certification for transporting animal feed",
-			"Available for long-term B2B partnerships and contracts",
-            "Routes within Greece"
-        ]
-    }
-    ]
-};
-// Skill details data (per language)
-const skillDetailsData = {
-    el: [
-    {
-        name: "Excel",
-        level: "Εξειδικευμένο",
-        experience: "5+ έτη εμπειρίας",
-        certification: "ECDL Expert (EL200638866KK)",
-        description: "Καθημερινή χρήση για price management και data analysis στο Pharm24.gr",
-        achievements: [
-            "Δημιουργία pivot tables για ανάλυση τιμών 20.000+ προϊόντων",
-            "Αυτοματοποίηση τιμοκαταλόγων με lookup functions",
-            "Weekly reporting για price comparisons και margins",
-            "Integration Excel data με Prisma Win ERP system"
-        ],
-        tools: ["Pivot Tables", "VLOOKUP/XLOOKUP", "Επικύρωση Δεδομένων", "Conditional Formatting", "Macros"]
-    },
-    {
-        name: "Entersoft",
-        level: "Προχωρημένο",
-        experience: "3+ έτη εμπειρίας",
-        description: "Integration με e-shop για stock και pricing updates",
-        achievements: [
-            "Διαχείριση inventory sync μεταξύ physical stores και e-shop",
-            "Δημιουργία νέων κωδικών και διαχείριση κωδικών φαρμάκου/παραφαρμάκου",
-            "Ενεμερώσεις τιμών βάση τιμοκαταλόγου από προμηθευτές στο e-shop",
-            "Παρακολούθηση αποθέματος σε πραγματικό χρόνο"
-        ],
-        tools: ["Μαζική Μεταβολή Εγγραφών", "Συγχρονισμός Τιμών", "Κωδικοποίηση Προϊόντων", "Παρακολούθηση Αποθέματος"]
-    },
-	{
-        name: "Prisma Win (Megasoft)",
-        level: "Προχωρημένο",
-        experience: "8+ έτη εμπειρίας",
-        description: "Stock, τιμολόγιση, καρτέλες πελατών",
-        achievements: [
-            "Διαχείριση inventory",
-            "Έκδοση παραστατικών",
-            "Καρτέλες πελατών",
-            "Στατιστικά"
-        ],
-        tools: ["Διαχείριση Αποθέματος", "Καρτέλες Πελατών", "Έκδοση Παραστατικών", "Στατιστικά Πωλήσεων"]
-    },
-    {
-        name: "Photoshop & Lightroom",
-        level: "Μεσαίο",
-        experience: "3+ έτη εμπειρίας",
-        description: "Βασική επεξεργασία εικόνων για e-shop",
-        achievements: [
-            "Soft editing φωτογραφιών προϊόντων",
-            "Δημιουργία product badges",
-            "Δημιουργία banner",
-            "Φωτογράφιση προϊόντων και επεξεργασία των φωτογραφιών"
-        ],
-        tools: ["Scripts", "Badges", "Background", "File types"]
-    },
-	//  E-commerce skills
-   {
-        name: "Product Management",
-        level: "Εξειδικευμένο",
-        experience: "2+ έτη εμπειρίας",
-        description: "20.000+ προϊόντα Pharm24.gr, Συντονισμός Ομάδας",
-        achievements: [
-            "Καταχώρηση και εμπλουτισμός 20.000+ pharmaceutical products",
-            "Quality control processes για product information accuracy",
-            "Συντονισμός ομάδας για 3-person content team",
-            "Product categorization και attribute management"
-        ],
-        tools: ["Καταλογοποίηση Προϊόντων", "Διασφάλιση Ποιότητας", "Διαχείριση Ομάδας", "Επικύρωση Δεδομένων"]
-    },
-   {
-        name: "Price Management",
-        level: "Εξειδικευμένο",
-        experience: "2+ έτη εμπειρίας",
-        description: "Εβδομαδιαίες ενημερώσεις τιμών, ενεργοποίηση/απενεργοποίηση εκπτωτικών πλάνων",
-        achievements: [
-            "Weekly τιμοκαταλόγων updates από 50+ suppliers",
-            "Promotional campaigns setup και monitoring",
-            "Discount policies management για gift/sample programs",
-            "Price comparison analysis για competitive positioning"
-        ],
-        tools: ["Παρακολούθηση Τιμών", "Προωθητικές Καμπάνιες", "Διαχείριση Εκπτώσεων", "Ανάλυση Ανταγωνισμού"]
-    },
-	{
-        name: "Content Strategy",
-        level: "Προχωρημένο",
-        experience: "2+ έτη εμπειρίας",
-        description: "Αναδιάρθρωση προβολής στο e-shop συμπληρωμάτων διατροφής, βελτιστοποίηση SEO",
-        achievements: [
-            "Αναδιάρθρωσημόρφωση σελίδων brand για στρατηγικούς συνεργάτες",
-            "Βελτίσωση περιγραφής προϊόντων για SEO και conversions",
-            "Συμμόρφωση περιεχομένου σχετικά με τους φαρμακευτικούς κανονισμούς",
-            "Brand storytelling και τοποθέτηση προϊόντος"
-        ],
-        tools: ["Συγγραφή Περιεχομένου", "Διαχείριση Brand", "Περιεχόμενο SEO", "Compliance Writing"]
-    },
-	{
-        name: "SEO Strategy",
-        level: "Εξειδικευμένο",
-        experience: "2+ έτη εμπειρίας",
-        description: "Αύξηση προβολών >500% στα συμπληρώματα Pharm24.gr",
-        achievements: [
-            "On-page optimization για 4 βασικά brands συμπληρωμάτων",
-            "Meta descriptions και title tags optimization",
-            "Keyword research για προϊόντα και μάρκες",
-            "Αναδιάρθρωση περιεχομένου για καλύτερη ορατότητα στις αναζήτησεις"
-        ],
-        tools: ["On-page SEO", "Meta Tags", "Keyword Research", "Βελτιστοποίηση Περιεχομένου", "Semrush", "Google Search Console"]
-    },
-	{
-        name: "Marketing Strategy",
-        level: "Μεσαίο",
-        experience: "2+ έτη εμπειρίας",
-        description: "Εφαρμογή πλάνου marketing στο Pharm24.gr",
-        achievements: [
-            "Στατηγική δώρων και δειγμάτων",
-            "Προβολή παρουσίασης προίοντων",
-            "Έλεγχος ανταγωνισμού",
-            "Αναδιάρθρωση περιεχομένου για καλύτερη ορατότητα στις αναζήτησεις"
-        ],
-        tools: ["Google Analytics", "Hotjar", "Keyword Research", "Βελτιστοποίηση Περιεχομένου", "Canva"]
-    },
-    {
-        name: "Inventory Sync",
-        level: "Εξειδικευμένο",
-        experience: "2+ έτη εμπειρίας",
-        description: "Συγχρονισμός φυσικών καταστημάτων και ηλεκτρονικού καταστήματος",
-        achievements: [
-            "Συγχρονισμός αποθέματος σε πραγματικό χρόνο μεταξύ καναλιών",
-            "Παρακολούθηση αποθέματος για φάρμακα με ημερομηνία λήξης",
-            "Σύστημα ειδοποιήσεων για χαμηλό απόθεμα",
-            "Διαχείριση αποθέματος σε πολλές τοποθεσίες"
-        ],
-        tools: ["Ενσωμάτωση ERP", "Παρακολούθηση Αποθέματος", "Συγχρονισμός Πολλαπλών Καναλιών", "Inventory Alerts"]
-    },
-    {
-        name: "Team Leadership",
-        level: "Προχωρημένο",
-        experience: "1+ έτος εμπειρίας",
-        description: "Υπεύθυνος ομάδας 3 ατόμων για καταχώρηση προίοντων στο e-shop",
-        achievements: [
-            "Διοίκηση και συντονισμός ομάδας content 3 ατόμων",
-            "Ανάθεση εργασιών και διαχείριση προτεραιοτήτων",
-            "Καθημερινός έλεγχος ποιότητας και παρακολούθηση απόδοσης",
-            "Εκπαίδευση νέων μελών για καταχώρηση νέων προϊόντων"
-        ],
-        tools: ["Συντονισμός Ομάδας", "Διαχείριση Εργασιών", "Έλεγχος Ποιότητας", "Εκπαίδευση & Ανάπτυξη", "Clockify"]
-    },
-    {
-        name: "Project Management",
-        level: "Μεσαίο",
-        experience: "3+ έτη εμπειρίας",
-        description: "Λειτουργία καταστήματος, εκκινήσεις προϊόντων, υλοποίηση συστημάτων",
-        achievements: [
-            "Εγκατάσταση καταστήματος και διαχείριση λειτουργιών για delicatessen",
-            "Συντονισμός εκκίνησης νέων προϊόντων",
-            "Υλοποίηση συστημάτων για POS, απόθεμα ζύγιση και τιμολόγιση",
-            "Διαχείριση σχέσεων προμηθευτών"
-        ],
-        tools: ["Διαχείριση Πόρων", "Διαχείριση Χρονοδιαγράμματος", "Ενημέρωση Υπευθύνων", "Σχεδιασμός Διαδικασιών"]
-    },
-    {
-        name: "Βελτιστοποίηση Διαδικασιών",
-        level: "Μεσαίο",
-        experience: "5+ έτη εμπειρίας",
-        description: "Απλοποίηση διαδικασιών παραλαβής/αποστολής, αυτοματοποίηση επαναλαμβανόμενων εργασιών, κόστος-effective λύσεις",
-        achievements: [
-            "Εντοπισμός κρίσιμων διαδικασιών που χρειάζονται βελτίωση",
-            "Χαρτογραφία ροής εργασίας (workflow mapping)",
-            "Ελαχιστοποίηση χρόνου κύκλου (faster turnover)",
-            "Quality standards establishment για content accuracy"
-        ],
-        tools: ["Ανάλυση Διαδικασιών", "Πρότυπα Ποιότητας", "Σχεδιασμός Ροής Εργασίας", "Efficiency Optimization"]
-    },
-    {
-        name: "Διαχείρηση & Ανάθεση Αρμοδιοτήτων",
-        level: "Προχωρημένο",
-        experience: "",
-        description: "Παρακίνηση και ενίσχυση της απόδοσης, δημιουργία θετικού περιβάλλοντος εργασίας, αποτελεσματική κατανομή πόρων",
-        achievements: [
-            "Διαχείριση Προτεραιοτήτων",
-            "Παρακολούθηση Απόδοσης",
-            "Εκπαίδευση",
-            "Κατανομή εργασιών ανάλογα με τις δεξιότητες κάθε μέλους",
-			"Ανάλυση δεδομένων απόδοσης (με χρήση tools όπως Clockify)",
-			"Ανάθεση deadlines και deliverables"
-        ],
-        tools: ["Professional Writing", "Επικοινωνία με Πελάτες", "Δημιουργία Περιεχομένου", "Τεκμηρίωση"]
-    },
-	// Languages
-	{
-        name: "Ελληνικά",
-        level: "Μητρική γλώσσα",
-        experience: "",
-        description: "Επαγγελματική γλώσσα επικοινωνίας, δημιουργία περιεχομένου",
-        achievements: [
-            "Επαγγελματική συγγραφή περιεχομένου για προϊόντα παραφάρμακου",
-            "Επικοινωνία με πελάτες και υποστήριξη",
-            "Περιγραφές προϊόντων και διαφημιστικό κείμενο",
-            "Τεκμηρίωση"
-        ],
-        tools: ["Επαγγελματική Συγγραφή", "Επικοινωνία με Πελάτες", "Δημιουργία Περιεχομένου", "Τεκμηρίωση"]
-    },
-    {
-        name: "Αγγλικά",
-        level: "Μεσαίο (Β2 Certified - Καλή γνώση)",
-        experience: "Κρατικό Πιστοποιητικό Γλωσσομάθειας - Αριθμός Μητρώου: KB/16028",
-        description: "Επαγγελματική γλώσσα επικοινωνίας, δημιουργία περιεχομένου",
-        achievements: [
-            "Επικοινωνία με διεθνείς προμηθευτές φαρμακευτικών και παραφαρμακευτικών προϊόντων",
-            "Τεχνικά εγχειρίδια ανάγνωσης και εφαρμογής",
-            "Online έρευνα για πληροφορίες προϊόντων και τάσεις",
-            "Περιγραφές προϊόντων στα Αγγλικά για παγκοσμίου κλάσης προϊόντα"
-        ],
-        tools: ["Επαγγελματική Επικοινωνία", "Τεχνική Ανάγνωση", "Δεξιότητες Έρευνας", "Τεκμηρίωση"]
-    }
-    ],
-    en: [
-    {
-        name: "Excel",
-        level: "Expert",
-        experience: "5+ years of experience",
-        certification: "ECDL Expert (EL200638866KK)",
-        description: "Daily use for price management and data analysis at Pharm24.gr",
-        achievements: [
-            "Creating pivot tables to analyze prices of 20,000+ products",
-            "Automating price lists with lookup functions",
-            "Weekly reporting for price comparisons and margins",
-            "Integrating Excel data with the Prisma Win ERP system"
-        ],
-        tools: ["Pivot Tables", "VLOOKUP/XLOOKUP", "Data Validation", "Conditional Formatting", "Macros"]
-    },
-    {
-        name: "Entersoft",
-        level: "Advanced",
-        experience: "3+ years of experience",
-        description: "Integration with the e-shop for stock and pricing updates",
-        achievements: [
-            "Managing inventory sync between physical stores and the e-shop",
-            "Creating new codes and managing medicine/parapharmaceutical codes",
-            "Updating prices on the e-shop based on supplier price lists",
-            "Real-time stock monitoring"
-        ],
-        tools: ["Bulk Record Editing", "Price Synchronization", "Product Coding", "Stock Monitoring"]
-    },
-	{
-        name: "Prisma Win (Megasoft)",
-        level: "Advanced",
-        experience: "8+ years of experience",
-        description: "Stock, invoicing, customer accounts",
-        achievements: [
-            "Inventory management",
-            "Issuing documents",
-            "Customer accounts",
-            "Statistics"
-        ],
-        tools: ["Inventory Management", "Customer Accounts", "Document Issuing", "Sales Statistics"]
-    },
-    {
-        name: "Photoshop & Lightroom",
-        level: "Intermediate",
-        experience: "3+ years of experience",
-        description: "Basic image editing for the e-shop",
-        achievements: [
-            "Soft editing of product photos",
-            "Creating product badges",
-            "Creating banners",
-            "Photographing products and editing the photos"
-        ],
-        tools: ["Scripts", "Badges", "Background", "File types"]
-    },
-	//  E-commerce skills
-   {
-        name: "Product Management",
-        level: "Expert",
-        experience: "2+ years of experience",
-        description: "20,000+ products at Pharm24.gr, team coordination",
-        achievements: [
-            "Listing and enriching 20,000+ pharmaceutical products",
-            "Quality control processes for product information accuracy",
-            "Coordinating a 3-person content team",
-            "Product categorization and attribute management"
-        ],
-        tools: ["Product Cataloging", "Quality Assurance", "Team Management", "Data Validation"]
-    },
-   {
-        name: "Price Management",
-        level: "Expert",
-        experience: "2+ years of experience",
-        description: "Weekly price updates, enabling/disabling discount plans",
-        achievements: [
-            "Weekly price-list updates from 50+ suppliers",
-            "Promotional campaign setup and monitoring",
-            "Discount policy management for gift/sample programs",
-            "Price comparison analysis for competitive positioning"
-        ],
-        tools: ["Price Monitoring", "Promotional Campaigns", "Discount Management", "Competitor Analysis"]
-    },
-	{
-        name: "Content Strategy",
-        level: "Advanced",
-        experience: "2+ years of experience",
-        description: "Restructuring the e-shop presentation of dietary supplements, SEO optimization",
-        achievements: [
-            "Reworking brand pages for strategic partners",
-            "Improving product descriptions for SEO and conversions",
-            "Content compliance with pharmaceutical regulations",
-            "Brand storytelling and product positioning"
-        ],
-        tools: ["Content Writing", "Brand Management", "SEO Content", "Compliance Writing"]
-    },
-	{
-        name: "SEO Strategy",
-        level: "Expert",
-        experience: "2+ years of experience",
-        description: "500%+ increase in views for Pharm24.gr supplements",
-        achievements: [
-            "On-page optimization for 4 core supplement brands",
-            "Meta descriptions and title tags optimization",
-            "Keyword research for products and brands",
-            "Restructuring content for better search visibility"
-        ],
-        tools: ["On-page SEO", "Meta Tags", "Keyword Research", "Content Optimization", "Semrush", "Google Search Console"]
-    },
-	{
-        name: "Marketing Strategy",
-        level: "Intermediate",
-        experience: "2+ years of experience",
-        description: "Implementing the marketing plan at Pharm24.gr",
-        achievements: [
-            "Gift and sample strategy",
-            "Product presentation and promotion",
-            "Competition monitoring",
-            "Restructuring content for better search visibility"
-        ],
-        tools: ["Google Analytics", "Hotjar", "Keyword Research", "Content Optimization", "Canva"]
-    },
-    {
-        name: "Inventory Sync",
-        level: "Expert",
-        experience: "2+ years of experience",
-        description: "Synchronizing physical stores and the e-shop",
-        achievements: [
-            "Real-time inventory synchronization across channels",
-            "Stock monitoring for medicines with expiry dates",
-            "Low-stock alert system",
-            "Multi-location inventory management"
-        ],
-        tools: ["ERP Integration", "Stock Monitoring", "Multi-channel Sync", "Inventory Alerts"]
-    },
-    {
-        name: "Team Leadership",
-        level: "Advanced",
-        experience: "1+ year of experience",
-        description: "Leading a 3-person team for product entry on the e-shop",
-        achievements: [
-            "Managing and coordinating a 3-person content team",
-            "Assigning tasks and managing priorities",
-            "Daily quality control and performance monitoring",
-            "Training new members on entering new products"
-        ],
-        tools: ["Team Coordination", "Task Management", "Quality Control", "Training & Development", "Clockify"]
-    },
-    {
-        name: "Project Management",
-        level: "Intermediate",
-        experience: "3+ years of experience",
-        description: "Store operations, product launches, system implementation",
-        achievements: [
-            "Store setup and operations management for a delicatessen",
-            "Coordinating new product launches",
-            "Implementing systems for POS, inventory, weighing and invoicing",
-            "Managing supplier relationships"
-        ],
-        tools: ["Resource Management", "Schedule Management", "Stakeholder Updates", "Process Design"]
-    },
-    {
-        name: "Process Optimization",
-        level: "Intermediate",
-        experience: "5+ years of experience",
-        description: "Streamlining receiving/shipping processes, automating repetitive tasks, cost-effective solutions",
-        achievements: [
-            "Identifying critical processes that need improvement",
-            "Workflow mapping",
-            "Minimizing cycle time (faster turnover)",
-            "Establishing quality standards for content accuracy"
-        ],
-        tools: ["Process Analysis", "Quality Standards", "Workflow Design", "Efficiency Optimization"]
-    },
-    {
-        name: "Delegation & Task Assignment",
-        level: "Advanced",
-        experience: "",
-        description: "Motivating and boosting performance, creating a positive work environment, effective resource allocation",
-        achievements: [
-            "Priority Management",
-            "Performance Monitoring",
-            "Training",
-            "Distributing tasks according to each member's skills",
-			"Analyzing performance data (using tools such as Clockify)",
-			"Assigning deadlines and deliverables"
-        ],
-        tools: ["Professional Writing", "Customer Communication", "Content Creation", "Documentation"]
-    },
-	// Languages
-	{
-        name: "Greek",
-        level: "Native",
-        experience: "",
-        description: "Professional language of communication, content creation",
-        achievements: [
-            "Professional content writing for parapharmaceutical products",
-            "Customer communication and support",
-            "Product descriptions and advertising copy",
-            "Documentation"
-        ],
-        tools: ["Professional Writing", "Customer Communication", "Content Creation", "Documentation"]
-    },
-    {
-        name: "English",
-        level: "Intermediate (B2 Certified - Good knowledge)",
-        experience: "State Certificate of Language Proficiency - Registry No.: KB/16028",
-        description: "Professional language of communication, content creation",
-        achievements: [
-            "Communicating with international suppliers of pharmaceutical and parapharmaceutical products",
-            "Reading and applying technical manuals",
-            "Online research for product information and trends",
-            "Writing English-language product descriptions for premium international brands"
-        ],
-        tools: ["Professional Communication", "Technical Reading", "Research Skills", "Documentation"]
-    }
-    ]
-};
-const throttle = (fn, delay) => {
-  let lastCall = 0;
-  return (...args) => {
-    const now = Date.now();
-    if (now - lastCall < delay) return;
-    lastCall = now;
-    fn(...args);
+  const DATA = window.CV_DATA;
+  const root = document.documentElement;
+  const params = new URLSearchParams(location.search);
+  const $ = id => document.getElementById(id);
+
+  // Ποιες ενότητες μπαίνουν σε κάθε σελίδα A4. «exp:0-3» = θέσεις εργασίας 1 έως 4.
+  // Αν προστεθεί κείμενο και μια σελίδα ξεχειλίσει, μετακίνησε μια ενότητα στην επόμενη.
+  const PAGES = [
+    ['head', 'summary', 'highlights', 'exp:0-3'],
+    ['expMore:4-5', 'education', 'training', 'skills', 'languages', 'projects', 'extra']
+  ];
+
+  const stored = key => { try { return localStorage.getItem(key); } catch (e) { return null; } };
+  const store = (key, value) => { try { localStorage.setItem(key, value); } catch (e) { /* storage blocked */ } };
+
+  // ?lang=en και ?theme=dark ανοίγουν τη σελίδα έτσι χωρίς να αλλάζουν την αποθηκευμένη
+  // επιλογή. ?photo=0 κρύβει τη φωτογραφία (για PDF χωρίς φωτογραφία).
+  let lang = params.get('lang') || stored('cv-lang') || 'el';
+  if (lang !== 'en') lang = 'el';
+  if (params.get('theme') === 'dark' || params.get('theme') === 'light') root.setAttribute('data-theme', params.get('theme'));
+  if (params.get('photo') === '0') root.classList.add('no-photo');
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const ui = key => DATA[lang].ui[key];
+
+  /* ---------- Εικονίδια ---------- */
+  const ICONS = {
+    pin: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
+    phone: 'M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z',
+    mail: 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z',
+    linkedin: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z',
+    github: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'
   };
-};
-const CACHED_DOM = {
-  sections: document.querySelectorAll('section'),
-  navLinks: document.querySelectorAll('.nav-link'),
-};
-// Navigation functionality
-class NavigationManager {
-    constructor() {
-        this.hamburger = document.querySelector('.hamburger');
-        this.navMenu = document.querySelector('.nav-menu');
-        this.navLinks = document.querySelectorAll('.nav-link');
-        this.init();
-    }
-    init() {
-        this.hamburger?.addEventListener('click', () => this.toggleMobileMenu());
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', () => this.closeMobileMenu());
-        });
-    }
-    toggleMobileMenu() {
-        const open = this.hamburger?.classList.toggle('active');
-        this.navMenu?.classList.toggle('active');
-        this.hamburger?.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-    closeMobileMenu() {
-        this.hamburger?.classList.remove('active');
-        this.navMenu?.classList.remove('active');
-        this.hamburger?.setAttribute('aria-expanded', 'false');
-    }
+  // Τα εικονίδια είναι διανυσματικά σχήματα και όχι χαρακτήρες, άρα δεν μπαίνουν στο κείμενο του PDF
+  const icon = name => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${ICONS[name]}"/></svg>`;
+  const SUN = '<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>';
+  const MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
 
-    updateActiveLink() {
-  const scrollPos = window.scrollY + 100;
-  CACHED_DOM.sections.forEach(section => {
-    const top = section.offsetTop;
-    const bottom = top + section.offsetHeight;
-    const id = section.getAttribute('id');
+  /* ---------- Φύλλα βιογραφικού ---------- */
+  const SEP = '<span class="sep"> | </span>';
+  const ext = 'target="_blank" rel="noopener"';
+  // Κείμενο εγγράφου: λέξεις με ενωτικό (e-commerce, on-page) δεν σπάνε στο τέλος της γραμμής,
+  // γιατί όποιος διαβάζει το PDF αυτόματα ενώνει τα δύο μισά χωρίς το ενωτικό («ecommerce»)
+  const txt = s => esc(s).replace(/[A-Za-z0-9]+(?:-[A-Za-z0-9]+)+/g, word => `<span class="nb">${word}</span>`);
+  // Οι τρεις ενότητες κρατούν τα id που είχαν στο παλιό site, για να δουλεύουν οι παλιοί σύνδεσμοι (#experience κ.λπ.)
+  const ANCHORS = { exp: 'experience', skills: 'skills', edu: 'education' };
+  const section = (cls, title, body) => `<section class="sec sec-${cls}"${ANCHORS[cls] ? ` id="${ANCHORS[cls]}"` : ''}><h2>${esc(title)}</h2>${body}</section>`;
 
-    if (scrollPos >= top && scrollPos <= bottom) {
-      CACHED_DOM.navLinks.forEach(link => link.classList.remove('active'));
-      document.querySelector(`a[href="#${id}"]`)?.classList.add('active');
-    }
-  });
-}
-}
-// Scroll animations manager
-class AnimationManager {
-    constructor() {
-        this.init();
-    }
-    init() {
-        this.revealSections();
-        this.initHeroAnimations();
-        // initProfilePulse() removed: the periodic scale transform on the avatar
-        // forced the photo into a low-res compositing layer (blurry on hi-DPI screens)
-    }
-    revealSections() {
-        const sections = document.querySelectorAll('.section');
-        const windowHeight = window.innerHeight;
-        const elementVisible = 150;
-        sections.forEach(section => {
-			if (section.classList.contains('visible')) return;
-            const elementTop = section.getBoundingClientRect().top;
-            if (elementTop < windowHeight - elementVisible) {
-                section.classList.add('visible');
-                // Animate skill badges when skills section becomes visible
-                if (section.id === 'skills' && !section.classList.contains('skills-animated')) {
-                    section.classList.add('skills-animated');
-                    this.animateSkillBadges();
-                }
-            }
-        });
-    }
-    animateSkillBadges() {
-        const skillBadges = document.querySelectorAll('.skill-badge');
-        skillBadges.forEach((badge, index) => {
-            badge.style.opacity = '0';
-            badge.style.transform = 'translateY(30px)';
-            setTimeout(() => {
-                badge.style.transition = 'all 0.6s ease';
-                badge.style.opacity = '1';
-                badge.style.transform = 'translateY(0)';
-            }, index * 100);
-        });
-    }
-    initHeroAnimations() {
-        const heroElements = document.querySelectorAll('.hero-text > *');
-        heroElements.forEach((element, index) => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            setTimeout(() => {
-                element.style.transition = 'all 0.8s ease';
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }, index * 200);
-        });
-        // Profile card animation
-        const profileCard = document.querySelector('.profile-card');
-        if (profileCard) {
-            setTimeout(() => {
-                profileCard.style.transform = 'translateY(0)';
-                profileCard.style.opacity = '1';
-            }, 600);
-        }
-    }
-    initProfilePulse() {
-        const avatar = document.querySelector('.profile-avatar');
-        if (!avatar) return;
-        this.pulseInterval = setInterval(() => {
-            avatar.classList.add('animate-pulse');
-            setTimeout(() => avatar.classList.remove('animate-pulse'), 2000);
-        }, 5000);
-    }
-}
-// Share Manager Class
-class ShareManager {
-    constructor() {
-        this.shareButton = document.getElementById('shareButton');
-        this.pageUrl = window.location.href;
-        this.pageTitle = document.title;
-        this.init();
-    }
+  // «ημερομηνία | οργανισμός», πάντα μέσα στην ίδια γραμμή
+  const meta = (cls, org, date) => {
+    const parts = [];
+    if (date) parts.push(`<span class="${cls}-date">${esc(date)}</span>`);
+    parts.push(`<span class="${cls}-org">${esc(org)}</span>`);
+    return `<p class="${cls}-meta">${parts.join(SEP)}</p>`;
+  };
+  const job = j => `<div class="job"><h3 class="job-title">${esc(j.title)}</h3>${meta('job', j.org, j.date)}<ul class="bullets">${j.bullets.map(b => `<li>${txt(b)}</li>`).join('')}</ul></div>`;
+  const item = i => `<div class="item"><h3 class="item-title">${esc(i.title)}</h3>${meta('item', i.org, i.date)}${i.note ? `<p class="item-note">${txt(i.note)}</p>` : ''}</div>`;
+  const labelled = rows => `<ul class="lines">${rows.map(([k, v]) => `<li><b>${esc(k)}:</b> ${txt(v)}</li>`).join('')}</ul>`;
 
-    init() {
-        this.shareButton?.addEventListener('click', () => this.share());
+  const blocks = {
+    head(t) {
+      const c = DATA.contact;
+      return `
+        <header class="cv-head">
+          <div class="cv-id">
+            <h1 class="cv-name">${esc(t.name)}</h1>
+            <p class="cv-role">${esc(t.role)}</p>
+          </div>
+          <ul class="cv-contact">
+            <li>${icon('pin')}<span>${esc(t.city)}</span></li>
+            <li><a href="tel:${c.tel}">${icon('phone')}<span>${c.phone}</span></a></li>
+            <li><a href="mailto:${c.email}">${icon('mail')}<span>${c.email}</span></a></li>
+            <li><a href="${c.linkedinUrl}" ${ext}>${icon('linkedin')}<span>${c.linkedin}</span></a></li>
+            <li><a href="${c.siteUrl}">${icon('github')}<span>${c.site}</span></a></li>
+          </ul>
+          <img class="cv-photo" src="img/photo.jpg" width="520" height="520" alt="${esc(t.photoAlt)}" fetchpriority="high" decoding="async">
+        </header>`;
+    },
+    summary: t => section('summary', t.labels.summary, `<p>${txt(t.summary)}</p>`),
+    highlights: t => section('highlights', t.labels.highlights,
+      `<ul class="facts">${t.highlights.map(([lead, rest]) => `<li><strong>${esc(lead)}</strong> ${txt(rest)}</li>`).join('')}</ul>`),
+    exp: (t, a, b) => section('exp', t.labels.experience, t.jobs.slice(a, b + 1).map(job).join('')),
+    // συνέχεια της εμπειρίας στην επόμενη σελίδα, χωρίς να επαναλαμβάνεται ο τίτλος
+    expMore: (t, a, b) => `<div class="sec sec-exp sec-cont">${t.jobs.slice(a, b + 1).map(job).join('')}</div>`,
+    education: t => section('edu', t.labels.education, t.education.map(item).join('')),
+    training: t => section('training', t.labels.training,
+      `<ul class="lines">${t.training.map(i => `<li><b>${esc(i.title)}</b>, ${esc(i.org)}${i.date ? ', ' + esc(i.date) : ''}</li>`).join('')}</ul>`),
+    skills: t => section('skills', t.labels.skills, labelled(t.skills.map(([k, list]) => [k, list.join(', ')]))),
+    languages: t => section('languages', t.labels.languages, labelled(t.languages)),
+    projects: t => section('projects', t.labels.projects,
+      `<ul class="lines projects">${t.projects.map(p =>
+        `<li><b>${esc(p.name)}:</b> ${txt(p.desc)} <a class="p-url" href="${p.href}" ${ext}>${esc(p.url)}</a></li>`).join('')}</ul>`),
+    extra: t => section('extra', t.labels.extra, `<p class="run">${t.extra.map(esc).join(SEP)}</p>`)
+  };
+
+  function renderBlock(t, spec) {
+    const [name, range] = spec.split(':');
+    if (!range) return blocks[name](t);
+    const [a, b] = range.split('-').map(Number);
+    return blocks[name](t, a, b);
+  }
+
+  function renderSheets() {
+    const t = DATA[lang];
+    $('sheets').innerHTML = PAGES.map((specs, i) => `
+      <article class="page">
+        ${specs.map(s => renderBlock(t, s)).join('')}
+        <p class="page-foot"><span>${esc(t.name)}</span><span>${esc(t.labels.page)} ${i + 1} ${esc(t.labels.of)} ${PAGES.length}</span></p>
+      </article>`).join('');
+  }
+
+  /* ---------- Portfolio ---------- */
+  function portfolioCard(p) {
+    const media = `<img src="${p.img}" alt="" width="800" height="500" loading="lazy" decoding="async">`;
+    const body = `
+      <div class="pf-body">
+        <p class="pf-type">${esc(p.type)}</p>
+        <h3 class="pf-name">${esc(p.name)}</h3>
+        <p class="pf-desc">${esc(p.desc)}</p>
+        <p class="pf-url">${esc(p.url)}${p.soon ? `<span class="pf-soon">${esc(ui('soon'))}</span>` : ''}</p>
+      </div>`;
+    // Όσο ένα site δεν είναι online, η κάρτα του δεν είναι σύνδεσμος
+    if (p.soon) return `<li><div class="pf">${media}${body}</div></li>`;
+    return `<li><a class="pf" href="${p.href}" ${ext}>${media}${body}<span class="sr-only">(${esc(ui('opensNew'))})</span></a></li>`;
+  }
+
+  /* ---------- Γλώσσα ---------- */
+  function applyLang() {
+    const t = DATA[lang];
+    root.lang = lang;
+    document.title = t.docTitle;
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t.ui[el.dataset.i18n]; });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t.ui[el.dataset.i18nAria]));
+    // Το κουμπί γλώσσας δείχνει τη γλώσσα στην οποία θα αλλάξει
+    $('langToggle').textContent = lang === 'el' ? 'EN' : 'ΕΛ';
+    $('langToggle').setAttribute('aria-label', t.ui.langAria);
+    $('pdfLink').href = DATA.pdf[lang];
+    $('pdfLink').title = t.ui.pdfAria;
+    $('ctCity').textContent = t.city;
+    $('footYear').textContent = new Date().getFullYear();
+    $('pfGrid').innerHTML = t.portfolio.map(portfolioCard).join('');
+    renderSheets();
+    clearStatus();
+  }
+
+  /* ---------- Θέμα ---------- */
+  const currentTheme = () => (root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  let themeTimer;
+
+  function paintTheme() {
+    $('themeIcon').innerHTML = currentTheme() === 'dark' ? MOON : SUN;
+    // Το χρώμα της γραμμής του browser στο κινητό ακολουθεί το θέμα της σελίδας
+    const desk = getComputedStyle(root).getPropertyValue('--desk').trim();
+    if (desk) document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.setAttribute('content', desk));
+  }
+
+  function setTheme(next, animate) {
+    if (animate) {
+      // Για λίγο όλα τα χρώματα αλλάζουν με μετάβαση, ώστε η εναλλαγή να μην «πετάγεται»
+      root.classList.add('theme-switching');
+      clearTimeout(themeTimer);
+      themeTimer = setTimeout(() => root.classList.remove('theme-switching'), 450);
     }
+    root.setAttribute('data-theme', next);
+    paintTheme();
+    renderCaptcha();
+  }
 
-    share() {
-        // Δοκιμή native sharing
-        if (navigator.share) {
-            navigator.share({
-                title: document.title,
-                text: t('shareText'),
-                url: this.pageUrl
-            }).catch(err => console.log('Share cancelled'));
-        } else {
-            // Fallback: Copy to clipboard
-            this.copyUrl();
-        }
+  /* ---------- Μενού κινητού ---------- */
+  function setMenu(open) {
+    $('navLinks').classList.toggle('open', open);
+    $('menuBtn').setAttribute('aria-expanded', String(open));
+  }
+  const menuOpen = () => $('navLinks').classList.contains('open');
+
+  // Τονίζει στο μενού την ενότητα που φαίνεται στην οθόνη
+  function markActiveLink() {
+    const line = window.scrollY + window.innerHeight * 0.35;
+    let active = 'cv';
+    ['cv', 'portfolio', 'contact'].forEach(id => { if ($(id).offsetTop <= line) active = id; });
+    document.querySelectorAll('#navLinks a').forEach(a => {
+      if (a.getAttribute('href') === '#' + active) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  }
+
+  /* ---------- Φόρμα επικοινωνίας ---------- */
+  let statusTimer;
+  function clearStatus() {
+    clearTimeout(statusTimer);
+    const el = $('formStatus');
+    el.className = 'form-status';
+    el.textContent = '';
+  }
+  function showStatus(kind, message) {
+    clearStatus();
+    const el = $('formStatus');
+    el.className = `form-status ${kind}`;
+    el.textContent = message;
+    // Η επιτυχία σβήνει μόνη της. Το σφάλμα μένει μέχρι την επόμενη προσπάθεια.
+    if (kind === 'ok') statusTimer = setTimeout(clearStatus, 6000);
+  }
+
+  // Το reCAPTCHA φορτώνει όταν ο επισκέπτης πλησιάσει στη φόρμα και όχι με το άνοιγμα
+  // της σελίδας, γιατί είναι το πιο βαρύ κομμάτι της.
+  let captchaId = null;
+  let captchaRequested = false;
+
+  function loadCaptcha() {
+    if (captchaRequested || !DATA.form.recaptchaKey) return;
+    captchaRequested = true;
+    window.cvCaptchaReady = renderCaptcha;
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?onload=cvCaptchaReady&render=explicit&hl=${lang}`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
+  // Στήνει το widget στο τρέχον θέμα. Καλείται ξανά σε αλλαγή θέματος, εκτός αν
+  // ο επισκέπτης έχει ήδη λύσει το captcha (για να μη χαθεί η απάντησή του).
+  function renderCaptcha() {
+    const box = $('recaptchaContainer');
+    if (!box || typeof window.grecaptcha?.render !== 'function') return;
+    if (captchaId !== null) {
+      try { if (window.grecaptcha.getResponse(captchaId)) return; } catch (e) { /* widget gone, render again */ }
     }
-
-    copyUrl() {
-        const url = this.pageUrl;
-
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(url)
-                .then(() => this.showToast(t('copied')))
-                .catch(() => this.fallbackCopy(url));
-        } else {
-            this.fallbackCopy(url);
-        }
+    const slot = document.createElement('div');
+    box.replaceChildren(slot);
+    try {
+      captchaId = window.grecaptcha.render(slot, {
+        sitekey: DATA.form.recaptchaKey,
+        theme: currentTheme(),
+        // το κανονικό widget έχει πλάτος 304px και δεν χωρά σε πολύ στενές οθόνες
+        size: box.clientWidth < 304 ? 'compact' : 'normal'
+      });
+    } catch (e) {
+      captchaId = null;
     }
-    fallbackCopy(url) {
-        const textarea = document.createElement('textarea');
-        textarea.value = url;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
+  }
 
-        try {
-            document.execCommand('copy');
-            this.showToast(t('copied'));
-        } catch (err) {
-            this.showToast(t('copyError'));
-        }
+  // true αν το captcha συμπληρώθηκε, ή αν το script δεν φόρτωσε καθόλου
+  // (fail-open: προτιμότερο να περάσει το μήνυμα παρά να κολλήσει η φόρμα)
+  function hasValidCaptcha() {
+    if (captchaId === null || typeof window.grecaptcha?.getResponse !== 'function') return true;
+    let token;
+    try { token = window.grecaptcha.getResponse(captchaId); } catch (e) { return true; }
+    if (!token) { showStatus('err', ui('captchaComplete')); return false; }
+    return true;
+  }
+  function resetCaptcha() {
+    try { if (captchaId !== null) window.grecaptcha.reset(captchaId); } catch (e) { /* no widget rendered */ }
+  }
 
-        document.body.removeChild(textarea);
+  // Επιστρέφει το πρώτο πεδίο με πρόβλημα και το μήνυμά του, ή null
+  function firstInvalid(form) {
+    const value = name => form.elements[name].value.trim();
+    if (!value('name')) return ['name', ui('enterName')];
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value('email'))) return ['email', ui('validEmail')];
+    if (!value('subject')) return ['subject', ui('enterSubject')];
+    if (!value('message')) return ['message', ui('enterMessage')];
+    return null;
+  }
+
+  function setSending(form, sending) {
+    const button = form.querySelector('[type="submit"]');
+    button.disabled = sending;
+    button.textContent = ui(sending ? 'sending' : 'send');
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+
+    const invalid = firstInvalid(form);
+    if (invalid) {
+      const field = form.elements[invalid[0]];
+      field.setAttribute('aria-invalid', 'true');
+      field.focus();
+      showStatus('err', invalid[1]);
+      return;
     }
-    showToast(message) {
-        // Αφαίρεση παλιών
-        const old = document.querySelector('.copy-toast');
-        if (old) old.remove();
-        const toast = document.createElement('div');
-        toast.className = 'copy-toast';
-        toast.textContent = message;
-        toast.style.background = message.includes('✔️') ? 'var(--color-primary)' : 'var(--color-error)';
-        toast.style.color = 'white';
-        toast.style.padding = '10px 15px';
-        toast.style.borderRadius = '6px';
-        toast.style.position = 'fixed';
-        toast.style.bottom = '80px';
-        toast.style.left = '50%';
-        toast.style.transform = 'translateX(-50%)';
-        toast.style.maxWidth = '90vw';
-        toast.style.zIndex = '10000';
-        toast.style.fontSize = '14px';
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 2000);
-    }
-}
-// Modal manager for experience and skill details
-class ModalManager {
-    constructor() {
-        this.modal = document.getElementById('experienceModal');
-        this.closeBtn = document.querySelector('.close');
-        this.init();
-    }
-    init() {
-        this.closeBtn?.addEventListener('click', () => this.closeModal());
-        this.closeBtn?.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                this.closeModal();
-            }
-        });
-        window.addEventListener('click', (event) => {
-            if (event.target === this.modal) {
-                this.closeModal();
-            }
-        });
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && this.modal && this.modal.style.display === 'block') {
-                this.closeModal();
-            }
-        });
-    }
-    // Remove any tools section injected by a previous skill modal
-    clearInjectedTools() {
-        this.modal?.querySelectorAll('.modal-tools').forEach(el => el.remove());
-    }
-    showExperienceDetails(index) {
-        const details = experienceDetails[currentLang()][index];
-        if (!details) return;
-        this.clearInjectedTools();
-        document.getElementById('modalTitle').textContent = details.title;
-        document.getElementById('modalCompany').textContent = details.company;
-        document.getElementById('modalPeriod').textContent = details.period;
-        document.getElementById('modalDescription').textContent = details.description;
-        const responsibilitiesList = document.getElementById('modalResponsibilities');
-        responsibilitiesList.innerHTML = '';
-        details.responsibilities.forEach(resp => {
-            const li = document.createElement('li');
-            li.textContent = resp;
-            responsibilitiesList.appendChild(li);
-        });
-        this.openModal();
-    }
-showSkillDetails(index) {
-    const skill = skillDetailsData[currentLang()][index];
-    if (!skill) return;
-    this.clearInjectedTools();
-    document.getElementById('modalTitle').textContent = skill.name;
-    document.getElementById('modalCompany').textContent = `${t('level')} ${skill.level}`;
-    document.getElementById('modalPeriod').textContent = skill.experience + (skill.certification ? ` • ${skill.certification}` : '');
-    document.getElementById('modalDescription').textContent = skill.description;
-    const responsibilitiesList = document.getElementById('modalResponsibilities');
-    responsibilitiesList.innerHTML = ''; // Καθαρισμός όλων των παλιών στοιχείων
-    const modalContentParent = responsibilitiesList.parentNode;
-    // Πρόσθεσε τα νέα achievements
-    if (skill.achievements) {
-        skill.achievements.forEach(achievement => {
-            const li = document.createElement('li');
-            li.textContent = achievement;
-            responsibilitiesList.appendChild(li);
-        });
-    }
-    // Πρόσθεσε τα νέα tools
-    if (skill.tools) {
-        const toolsTitle = document.createElement('h4');
-        toolsTitle.textContent = t('toolsTitle');
-        toolsTitle.className = 'modal-tools';
-        toolsTitle.style.marginTop = 'var(--space-20)';
-        modalContentParent.appendChild(toolsTitle);
-        const toolsList = document.createElement('div');
-        toolsList.className = 'modal-tools';
-        toolsList.style.display = 'flex';
-        toolsList.style.flexWrap = 'wrap';
-        toolsList.style.gap = 'var(--space-8)';
-        toolsList.style.marginTop = 'var(--space-12)';
-        skill.tools.forEach(tool => {
-            const toolBadge = document.createElement('span');
-            toolBadge.textContent = tool;
-            toolBadge.style.background = 'var(--color-bg-1)';
-            toolBadge.style.color = 'var(--color-primary)';
-            toolBadge.style.padding = 'var(--space-6) var(--space-12)';
-            toolBadge.style.borderRadius = 'var(--radius-full)';
-            toolBadge.style.fontSize = 'var(--font-size-xs)';
-            toolBadge.style.fontWeight = 'var(--font-weight-medium)';
-            toolsList.appendChild(toolBadge);
-        });
-        modalContentParent.appendChild(toolsList);
-    }
-    this.openModal();
-}
-    openModal() {
-        this.lastFocused = document.activeElement;
-        this.modal.style.display = 'block';
-        this.modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        this.closeBtn?.focus();
-    }
+    if (DATA.form.recaptchaKey && !hasValidCaptcha()) return;
 
-    closeModal() {
-        this.modal.style.display = 'none';
-        this.modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = 'auto';
-        this.lastFocused?.focus?.();
-    }
-}
-// Contact form manager
-// reCAPTCHA v2 ("I'm not a robot" Checkbox) site key.
-// Άδειο string = το captcha είναι απενεργοποιημένο και η φόρμα δουλεύει κανονικά.
-// Για να το ενεργοποιήσεις: πάρε site key από https://www.google.com/recaptcha/admin
-// (τύπος: v2 Checkbox, domains: konskall.github.io + localhost) και βάλ' το εδώ —
-// το widget και ο έλεγχος ενεργοποιούνται αυτόματα, δεν χρειάζεται άλλη αλλαγή.
-// Αν το widget εμφανίσει "Invalid site key", ξανακάνε το άδειο ώστε να μη κολλήσει η φόρμα.
-const RECAPTCHA_SITE_KEY = '6LeSfJgtAAAAANvE9CzqEFcvbo85A7rBViVlFQMf';
-
-class ContactFormManager {
-    constructor() {
-        this.form = document.getElementById('contactForm');
-        this.successMessage = document.getElementById('successMessage');
-        console.log('ContactFormManager initialized');
-        this.init();
-    }
-
-    init() {
-        this.form?.addEventListener('submit', (e) => this.handleSubmit(e));
-        this.setupRecaptcha();
-    }
-
-    // Φορτώνει το reCAPTCHA μόνο όταν υπάρχει ρυθμισμένο site key
-    setupRecaptcha() {
-        const container = document.getElementById('recaptchaContainer');
-        if (!container || !RECAPTCHA_SITE_KEY) return;
-
-        const widget = document.createElement('div');
-        widget.className = 'g-recaptcha';
-        widget.dataset.sitekey = RECAPTCHA_SITE_KEY;
-        container.appendChild(widget);
-
-        const script = document.createElement('script');
-        script.src = 'https://www.google.com/recaptcha/api.js';
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        console.log('Form submitted');
-
-        const formData = new FormData(this.form);
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            subject: formData.get('subject'),
-            message: formData.get('message')
-        };
-
-        if (!this.validateForm(data)) {
-            return;
-        }
-
-        this.simulateSubmission();
-    }
-
-    validateForm(data) {
-        const { name, email, subject, message } = data;
-
-        if (!name.trim()) {
-            this.showError(t('enterName'));
-            return false;
-        }
-        if (!email.trim() || !this.isValidEmail(email)) {
-            this.showError(t('validEmail'));
-            return false;
-        }
-        if (!subject.trim()) {
-            this.showError(t('enterSubject'));
-            return false;
-        }
-        if (!message.trim()) {
-            this.showError(t('enterMessage'));
-            return false;
-        }
-
-        // ✅ Έλεγχος reCAPTCHA — μόνο όταν υπάρχει ρυθμισμένο site key
-        if (RECAPTCHA_SITE_KEY && !this.hasValidCaptcha()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    // true αν το captcha συμπληρώθηκε, ή αν το script δεν φόρτωσε καθόλου
-    // (fail-open: προτιμότερο να περάσει το μήνυμα παρά να κολλήσει η φόρμα)
-    hasValidCaptcha() {
-        if (typeof window.grecaptcha?.getResponse !== 'function') return true;
-
-        let token;
-        try {
-            token = window.grecaptcha.getResponse();
-        } catch (e) {
-            return true; // δεν έχει γίνει render κανένα widget
-        }
-        if (!token) {
-            this.showError(t('captchaComplete'));
-            return false;
-        }
-        return true;
-    }
-
-    resetCaptcha() {
-        try {
-            window.grecaptcha?.reset();
-        } catch (e) {
-            /* δεν υπάρχει rendered widget */
-        }
-    }
-
-    showError(message) {
-        let errorDiv = this.form.querySelector('.error-message');
-        if (!errorDiv) {
-            errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.style.background = 'rgba(var(--color-red-500-rgb), 0.1)';
-            errorDiv.style.color = 'var(--color-error)';
-            errorDiv.style.padding = 'var(--space-12)';
-            errorDiv.style.borderRadius = 'var(--radius-base)';
-            errorDiv.style.border = '1px solid rgba(var(--color-red-500-rgb), 0.3)';
-            errorDiv.style.marginTop = 'var(--space-16)';
-            this.form.appendChild(errorDiv);
-        }
-        errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-        setTimeout(() => {
-            if (errorDiv.parentNode) {
-                errorDiv.remove();
-            }
-        }, 3000);
-    }
-
-    simulateSubmission() {
-    const errorDiv = this.form.querySelector('.error-message');
-    if (errorDiv) {
-        errorDiv.remove();
-    }
-
-    // Στέλνε στο Formspree
-    const formData = new FormData(this.form);
-
-    fetch('https://formspree.io/f/mvgvbwno', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-    })
-    .then(response => {
+    clearStatus();
+    setSending(form, true);
+    fetch(DATA.form.endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+      .then(response => {
         if (response.ok) {
-            this.successMessage.style.display = 'block';
-            this.form.reset();
-            this.resetCaptcha();
-
-            setTimeout(() => {
-                this.successMessage.style.display = 'none';
-            }, 3000);
+          showStatus('ok', ui('sent'));
+          form.reset();
         } else {
-            this.showError(t('sendError'));
-            this.resetCaptcha();
+          showStatus('err', ui('sendError'));
         }
-    })
-    .catch(error => {
-        this.showError(t('sendErrorShort'));
-        console.error(error);
-    });
-}
-}
+        resetCaptcha();
+      })
+      .catch(() => showStatus('err', ui('sendError')))
+      .finally(() => setSending(form, false));
+  }
 
-// Αρχικοποίηση
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new ContactFormManager();
-    });
-} else {
-    new ContactFormManager();
-}
-// Navbar scroll effect manager
-class NavbarManager {
-    constructor() {
-        this.navbar = document.querySelector('.navbar');
-        this.init();
+  /* ---------- Κοινοποίηση ---------- */
+  function toast(message) {
+    document.querySelector('.toast')?.remove();
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.setAttribute('role', 'status');
+    el.textContent = message;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2400);
+  }
+  function fallbackCopy(url) {
+    const area = document.createElement('textarea');
+    area.value = url;
+    area.setAttribute('readonly', '');
+    area.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(area);
+    area.select();
+    try { document.execCommand('copy'); toast(ui('copied')); } catch (e) { toast(ui('copyError')); }
+    area.remove();
+  }
+  function share() {
+    const url = location.origin + location.pathname;
+    if (navigator.share) {
+      navigator.share({ title: document.title, text: ui('shareText'), url }).catch(() => { /* cancelled by the visitor */ });
+    } else if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url).then(() => toast(ui('copied'))).catch(() => fallbackCopy(url));
+    } else {
+      fallbackCopy(url);
     }
-    init() {
-        this.handleScroll();
-    }
-    handleScroll() {
-        // Toggle a class instead of inline colors so dark-mode CSS can take over
-        this.navbar?.classList.toggle('scrolled', window.scrollY > 50);
-    }
-}
-// Theme (light/dark) manager
-class ThemeManager {
-    constructor() {
-        this.root = document.documentElement;
-        this.btn = document.getElementById('themeToggle');
-        this.icon = document.getElementById('themeIcon');
-        this.init();
-    }
-    init() {
-        this.updateIcon();
-        this.btn?.addEventListener('click', () => this.toggle());
-    }
-    current() {
-        return this.root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-    }
-    toggle() {
-        const next = this.current() === 'dark' ? 'light' : 'dark';
-        this.root.setAttribute('data-theme', next);
-        try { localStorage.setItem('cv-theme', next); } catch (e) {}
-        this.updateIcon();
-    }
-    updateIcon() {
-        if (!this.icon) return;
-        this.icon.innerHTML = this.current() === 'dark'
-            ? '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>'
-            : '<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>';
-    }
-}
-// Language (Greek / English) manager
-class LanguageManager {
-    constructor() {
-        this.root = document.documentElement;
-        this.btn = document.getElementById('langToggle');
-        this.label = document.getElementById('langToggleLabel');
-        let stored = null;
-        try { stored = localStorage.getItem('cv-lang'); } catch (e) {}
-        this.lang = (stored === 'en' || stored === 'el') ? stored : 'el';
-        this.captureOriginals();
-        this.init();
-    }
-    // Snapshot the original (Greek) content so we can switch back to it
-    captureOriginals() {
-        document.querySelectorAll('[data-en]').forEach(el => {
-            if (el.dataset.el === undefined) el.dataset.el = el.innerHTML;
-        });
-        document.querySelectorAll('[data-en-aria]').forEach(el => {
-            if (el.dataset.elAria === undefined) el.dataset.elAria = el.getAttribute('aria-label') || '';
-        });
-        document.querySelectorAll('[data-en-title]').forEach(el => {
-            if (el.dataset.elTitle === undefined) el.dataset.elTitle = el.getAttribute('title') || '';
-        });
-    }
-    init() {
-        this.apply(this.lang);
-        this.btn?.addEventListener('click', () => this.toggle());
-    }
-    current() { return this.lang; }
-    toggle() {
-        this.apply(this.lang === 'el' ? 'en' : 'el');
-    }
-    apply(lang) {
-        this.lang = lang;
-        try { localStorage.setItem('cv-lang', lang); } catch (e) {}
-        this.root.setAttribute('lang', lang);
-        const en = lang === 'en';
-        // innerHTML overrides
-        document.querySelectorAll('[data-en]').forEach(el => {
-            el.innerHTML = en ? el.dataset.en : el.dataset.el;
-        });
-        // aria-label overrides
-        document.querySelectorAll('[data-en-aria]').forEach(el => {
-            el.setAttribute('aria-label', en ? el.dataset.enAria : el.dataset.elAria);
-        });
-        // title overrides
-        document.querySelectorAll('[data-en-title]').forEach(el => {
-            el.setAttribute('title', en ? el.dataset.enTitle : el.dataset.elTitle);
-        });
-        // Document title
-        document.title = en
-            ? 'Konstantinos Kalliakoudis - CV & Portfolio'
-            : 'Καλλιακούδης Κωνσταντίνος - CV & Portfolio';
-        // Toggle button shows the language you can switch TO
-        if (this.label) this.label.textContent = en ? 'ΕΛ' : 'EN';
-        if (this.btn) this.btn.setAttribute('aria-label', en ? 'Αλλαγή σε Ελληνικά' : 'Switch to English');
-    }
-}
-// Main application controller
-class CVApplication {
-    constructor() {
-        this.languageManager = new LanguageManager();
-        this.themeManager = new ThemeManager();
-        this.navigationManager = new NavigationManager();
-        this.animationManager = new AnimationManager();
-        this.modalManager = new ModalManager();
-        // this.contactFormManager = new ContactFormManager(); // Disabled for Formspree
-        this.navbarManager = new NavbarManager();
-		this.scrollToTopButton = new ScrollToTopButton();
-		this.shareManager = new ShareManager();
-        this.init();
-    }
-    init() {
-        this.attachEventListeners();
-        this.exposeGlobalFunctions();
-        this.enableCardKeyboardAccess();
-    }
-    enableCardKeyboardAccess() {
-        // Make the click-only experience/skill cards reachable & operable by keyboard
-        const cards = document.querySelectorAll('.timeline-content, .skill-badge');
-        cards.forEach(card => {
-            if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
-            if (!card.hasAttribute('role')) card.setAttribute('role', 'button');
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    card.click();
-                }
-            });
-        });
-    }
-    attachEventListeners() {
-  const handleScrollThrottled = throttle(() => {
-    this.navigationManager.updateActiveLink();
-    this.animationManager.revealSections();
-    this.navbarManager.handleScroll();
-  }, 100); // Κάθε 100ms μόνο
+  }
 
-  window.addEventListener('scroll', handleScrollThrottled);
+  /* ---------- Εκκίνηση ---------- */
+  $('chips').innerHTML = DATA.interests.map(i => `<li>${esc(i)}</li>`).join('');
+  applyLang();
+  paintTheme();
+  root.classList.add('ready');
 
-  window.addEventListener('load', () => {
-    this.animationManager.revealSections();
-    this.navigationManager.updateActiveLink();
+  // Ο έλεγχος των πεδίων γίνεται εδώ, με μηνύματα στη γλώσσα της σελίδας.
+  // Χωρίς JavaScript η φόρμα στέλνει απευθείας στο Formspree με τον έλεγχο του browser.
+  $('contactForm').noValidate = true;
+  $('contactForm').addEventListener('submit', handleSubmit);
+  $('contactForm').addEventListener('input', e => e.target.removeAttribute('aria-invalid'));
+  $('contactForm').addEventListener('focusin', loadCaptcha);
+  if ('IntersectionObserver' in window) {
+    const watcher = new IntersectionObserver(entries => {
+      if (entries.some(en => en.isIntersecting)) { loadCaptcha(); watcher.disconnect(); }
+    }, { rootMargin: '600px 0px' });
+    watcher.observe($('contact'));
+  } else {
+    loadCaptcha();
+  }
+
+  $('langToggle').addEventListener('click', () => {
+    lang = lang === 'el' ? 'en' : 'el';
+    store('cv-lang', lang);
+    applyLang();
   });
-}
-    exposeGlobalFunctions() {
-        // Expose functions to global scope for HTML onclick handlers
-        window.showExperienceDetails = (index) => {
-            this.modalManager.showExperienceDetails(index);
-        };
-        window.showSkillDetails = (index) => {
-            this.modalManager.showSkillDetails(index);
-        };
-    }
-}
-// Scroll to top button functionality
-class ScrollToTopButton {
-    constructor() {
-        this.btn = document.querySelector('.scroll-to-top-btn');
-        this.init();
-    }
+  $('themeToggle').addEventListener('click', () => {
+    const next = currentTheme() === 'dark' ? 'light' : 'dark';
+    store('cv-theme', next);
+    setTheme(next, true);
+  });
+  $('shareButton').addEventListener('click', share);
+  $('menuBtn').addEventListener('click', e => {
+    const open = !menuOpen();
+    setMenu(open);
+    // Άνοιγμα από το πληκτρολόγιο (detail 0): η εστίαση πάει στον πρώτο σύνδεσμο,
+    // γιατί οι σύνδεσμοι βρίσκονται πριν από το κουμπί και το Tab θα τους προσπερνούσε
+    if (open && e.detail === 0) $('navLinks').querySelector('a').focus();
+  });
+  $('toTop').addEventListener('click', e => {
+    e.preventDefault();
+    history.replaceState(null, '', location.pathname + location.search);
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  });
 
-    init() {
-        const handleScrollThrottled = throttle(() => this.handleScroll(), 100);
-        window.addEventListener('scroll', handleScrollThrottled);
-        this.btn?.addEventListener('click', (e) => this.scrollToTop(e));
-    }
+  // Το μενού κινητού κλείνει με επιλογή συνδέσμου, με κλικ έξω από αυτό ή με Escape
+  document.addEventListener('click', e => {
+    if (!menuOpen() || e.target.closest('#menuBtn')) return;
+    if (e.target.closest('#navLinks a') || !e.target.closest('#navLinks')) setMenu(false);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menuOpen()) { setMenu(false); $('menuBtn').focus(); }
+  });
 
-    handleScroll() {
-        if (window.scrollY > 300) {
-            this.btn?.classList.add('show');
-        } else {
-            this.btn?.classList.remove('show');
-        }
-    }
+  // Όσο ο επισκέπτης δεν έχει διαλέξει θέμα, η σελίδα ακολουθεί το θέμα της συσκευής
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', e => {
+    if (!stored('cv-theme') && !params.get('theme')) setTheme(e.matches ? 'dark' : 'light', true);
+  });
 
-    scrollToTop(e) {
-        e.preventDefault();
+  // Στην εκτύπωση και στην «Αποθήκευση ως PDF» το έγγραφο παίρνει τον τίτλο του βιογραφικού
+  window.addEventListener('beforeprint', () => { document.title = DATA[lang].pdfTitle; });
+  window.addEventListener('afterprint', () => { document.title = DATA[lang].docTitle; });
 
-        // ✨ NEW: Reset URL to root without hash
-        history.replaceState(null, '', window.location.pathname);
+  let ticking = false;
+  function onScroll() {
+    $('toTop').classList.toggle('show', window.scrollY > 300);
+    $('siteNav').classList.toggle('scrolled', window.scrollY > 50);
+    markActiveLink();
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  window.addEventListener('resize', markActiveLink, { passive: true });
 
-        // Smooth scroll to top
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-}
-// Initialize application when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new CVApplication();
-    });
-} else {
-    new CVApplication();
-}
+  // Η σελίδα στήνεται μετά το άνοιγμα, άρα ένας σύνδεσμος με #ενότητα θέλει ξανά κύλιση εκεί
+  if (location.hash.length > 1) {
+    let target = null;
+    try { target = $(decodeURIComponent(location.hash.slice(1))); } catch (e) { /* malformed hash */ }
+    if (target) target.scrollIntoView({ behavior: 'instant' });
+  }
+  onScroll();
+})();

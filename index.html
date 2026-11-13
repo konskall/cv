@@ -1,902 +1,202 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-    <title>Καλλιακούδης Κωνσταντίνος - CV &amp; Portfolio</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Apply saved/system theme + saved language before paint to avoid flash -->
+    <title>Κωνσταντίνος Καλλιακούδης - CV &amp; Portfolio</title>
+    <!-- Θέμα (αποθηκευμένο ή της συσκευής) και γλώσσα πριν από την πρώτη εμφάνιση, για να μην «αναβοσβήνει» η σελίδα -->
     <script>(function(){try{var t=localStorage.getItem('cv-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.setAttribute('data-theme','dark');}var l=localStorage.getItem('cv-lang');if(l==='en'||l==='el'){document.documentElement.setAttribute('lang',l);}}catch(e){}})();</script>
-    <meta name="description" content="Καλλιακούδης Κωνσταντίνος - E-commerce Specialist CV & Portfolio">
+    <meta name="description" content="Κωνσταντίνος Καλλιακούδης - Product Content Coordinator, E-commerce. Βιογραφικό, portfolio και στοιχεία επικοινωνίας.">
     <meta name="keywords" content="Product Content Coordinator, E-commerce Specialist, CV, Portfolio, Pharm24, Σπάρτη, e-commerce, product management, SEO, content coordinator, data analysis, team leadership, pharmacy">
-    <meta name="author" content="Καλλιακούδης Κωνσταντίνος">
-    <!-- Preconnect to third-party origins on the critical path -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <!-- Preload the LCP hero image so it starts before the CSS chain finishes -->
-    <link rel="preload" as="image" href="img/profilepic.webp" fetchpriority="high">
-    <!-- Fonts (only the weights actually used) -->
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome — loaded non-blocking so it doesn't delay first paint -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    <!-- Stylesheet -->
+    <meta name="author" content="Κωνσταντίνος Καλλιακούδης">
+    <!-- Τα αρχεία που χρειάζεται η πρώτη οθόνη ξεκινούν να κατεβαίνουν αμέσως -->
+    <link rel="preload" as="font" type="font/woff2" href="fonts/manrope-800-greek.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="fonts/manrope-500-greek.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="fonts/manrope-500-latin.woff2" crossorigin>
+    <link rel="preload" as="image" href="img/photo.jpg" fetchpriority="high">
     <link rel="stylesheet" href="style.css">
-	<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="KK CV" />
-    <link rel="manifest" href="site.webmanifest" />
-	<meta property="og:type" content="profile" />
-    <meta property="og:title" content="Κωνσταντίνος Καλλιακούδης - E-commerce Specialist" />
-    <meta property="og:description" content="Έμπειρος συντονιστής περιεχομένου e-commerce με ειδίκευση σε φαρμακείο, SEO on-page, ενημερώσεις τιμών/προωθήσεων και διαλειτουργία ERP-CMS. Ηγούμαι ομάδας 3 ατόμων για ταχεία και ακριβή καταχώρηση 20.000+ κωδικών." />
+    <noscript><style>.sheets { min-height: 0; }</style></noscript>
+    <script src="cv-data.js" defer></script>
+    <script src="app.js" defer></script>
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="KK CV">
+    <link rel="manifest" href="site.webmanifest">
+    <!-- ===================== OPEN GRAPH ===================== -->
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Κωνσταντίνος Καλλιακούδης - Product Content Coordinator, E-commerce">
+    <meta property="og:description" content="Product Content Coordinator σε online φαρμακείο με 20.000+ κωδικούς προϊόντων. Συντονισμός ομάδας 3 ατόμων, ενημερώσεις τιμών και προωθήσεων, SEO on-page, Entersoft ERP.">
     <meta property="og:url" content="https://konskall.github.io/cv/">
-    <meta property="og:image" content="https://konskall.github.io/cv/img/cvog.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:type" content="image/png" />
-    <!-- Profile Specific OG Tags -->
-    <meta property="profile:first_name" content="Κωνσταντίνος" />
-    <meta property="profile:last_name" content="Καλλιακούδης" />
-    <meta property="profile:username" content="kalliakoudis" />
-    <!-- ===================== TWITTER CARD TAGS ===================== -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Κωνσταντίνος Καλλιακούδης - Product Content Coordinator" />
-    <meta name="twitter:description" content="E-commerce Specialist | Team Leader | SEO Expert | Data Analyst" />
-    <meta name="twitter:image" content="https://konskall.github.io/cv/img/cvog.png" />
-    <meta name="twitter:image:alt" content="Professional portfolio of Konstantinos Kalliakoudis" />
-    <!-- ===================== STANDARD META TAGS ===================== -->
-    <!-- General Meta Tags -->
-    <meta name="copyright" content="© 2025 Κωνσταντίνος Καλλιακούδης. All rights reserved." />
-    <!-- Theme Color (Teal - Matching your brand) -->
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#EEF2F8" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0A1525" />
-    <meta name="msapplication-TileColor" content="#0F2036" />
-    <!-- Robots Meta Tags -->
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow" />
+    <meta property="og:locale" content="el_GR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:image" content="https://konskall.github.io/cv/img/cvog.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="profile:first_name" content="Κωνσταντίνος">
+    <meta property="profile:last_name" content="Καλλιακούδης">
+    <meta property="profile:username" content="kalliakoudis">
+    <!-- ===================== TWITTER CARD ===================== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Κωνσταντίνος Καλλιακούδης - Product Content Coordinator">
+    <meta name="twitter:description" content="E-commerce | Product Content | SEO on-page | Team Leadership">
+    <meta name="twitter:image" content="https://konskall.github.io/cv/img/cvog.jpg">
+    <meta name="twitter:image:alt" content="Professional portfolio of Konstantinos Kalliakoudis">
+    <!-- ===================== ΓΕΝΙΚΑ ===================== -->
+    <meta name="copyright" content="© 2026 Κωνσταντίνος Καλλιακούδης. All rights reserved.">
+    <!-- Χρώμα της γραμμής του browser στο κινητό (το app.js το προσαρμόζει όταν αλλάζει το θέμα) -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#E3E9F1">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070E18">
+    <meta name="msapplication-TileColor" content="#0F2036">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://konskall.github.io/cv/">
     <!-- ===================== STRUCTURED DATA (JSON-LD) ===================== -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Κωνσταντίνος Καλλιακούδης",
-  "url": "https://konskall.github.io/cv/",
-  "image": "https://konskall.github.io/cv/img/cvog.png",
-  "description": "Product Content Coordinator & E-commerce Specialist",
-  "jobTitle": "Product Content Coordinator",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "Pharm24.gr"
-  },
-  "sameAs": [
-    "https://www.linkedin.com/in/konstantinos-kalliakoudis-902b90103"
-  ],
-  "email": "konskall@gmail.com",
-  "telephone": "+306983033004",
-  "knowsAbout": [
-    "E-commerce Management",
-    "SEO Optimization",
-    "Product Management",
-    "Data Analysis",
-    "Team Leadership",
-    "Content Strategy"
-  ]
-}
-</script>
-<!-- Canonical URL (Prevent duplicate content) -->
-<link rel="canonical" href="https://konskall.github.io/cv/" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Κωνσταντίνος Καλλιακούδης",
+      "alternateName": "Konstantinos Kalliakoudis",
+      "url": "https://konskall.github.io/cv/",
+      "image": "https://konskall.github.io/cv/img/cvog.jpg",
+      "description": "Product Content Coordinator, E-commerce",
+      "jobTitle": "Product Content Coordinator",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Pharm24.gr"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Πανεπιστήμιο Πατρών"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Σπάρτη",
+        "addressRegion": "Λακωνία",
+        "addressCountry": "GR"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/konstantinos-kalliakoudis-902b90103",
+        "https://github.com/konskall"
+      ],
+      "email": "konskall@gmail.com",
+      "telephone": "+306983033004",
+      "knowsAbout": [
+        "E-commerce Management",
+        "SEO Optimization",
+        "Product Management",
+        "Data Analysis",
+        "Team Leadership",
+        "Content Strategy"
+      ]
+    }
+    </script>
 </head>
 <body>
-    <div class="bgfx" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-container">
-                <div class="logo" data-en="K. Kalliakoudis">Κ. Καλλιακούδης</div>
-                <ul class="nav-menu">
-                    <li><a href="#experience" class="nav-link" data-en="Experience">Εμπειρία</a></li>
-                    <li><a href="#skills" class="nav-link" data-en="Skills">Δεξιότητες</a></li>
-                    <li><a href="#education" class="nav-link" data-en="Education">Εκπαίδευση</a></li>
-                    <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                    <li><a href="#contact" class="nav-link" data-en="Contact">Επικοινωνία</a></li>
-                </ul>
-                <div class="nav-tools">
-                    <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch to English">
-                        <span id="langToggleLabel">EN</span>
-                    </button>
-                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Εναλλαγή φωτεινού / σκοτεινού θέματος" data-en-aria="Toggle light / dark theme">
-                        <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
-                    </button>
-                    <button class="hamburger" type="button" aria-label="Άνοιγμα μενού" data-en-aria="Open menu" aria-expanded="false">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
+    <a class="skip" href="#cv" data-i18n="skip">Μετάβαση στο περιεχόμενο</a>
+
+    <!-- Μενού -->
+    <header class="nav" id="siteNav">
+        <nav class="nav-in" aria-label="Κύρια πλοήγηση" data-i18n-aria="navAria">
+            <a class="logo" href="#cv" data-i18n="logo">Κ. Καλλιακούδης</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#cv" data-i18n="navCv">Βιογραφικό</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact" data-i18n="navContact">Επικοινωνία</a></li>
+            </ul>
+            <div class="nav-tools">
+                <button class="tool" id="langToggle" type="button" aria-label="Switch to English">EN</button>
+                <button class="tool" id="themeToggle" type="button" aria-label="Εναλλαγή φωτεινού / σκοτεινού θέματος" data-i18n-aria="themeAria">
+                    <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+                </button>
+                <a class="btn pdf-btn" id="pdfLink" href="Kalliakoudis_Konstantinos_CV.pdf" download aria-label="Λήψη βιογραφικού σε PDF" data-i18n-aria="pdfAria">
+                    <span class="pdf-text" data-i18n="downloadCv">Λήψη CV</span>
+                    <!-- Εικονίδιο PDF (Adobe Acrobat) -->
+                    <svg class="pdf-ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.4" fill="#EC1C24"/><path fill="#fff" transform="translate(4.4 4.3) scale(.635)" d="M23.63 15.3c-.71-.745-2.166-1.17-4.224-1.17-1.1 0-2.377.106-3.761.354a19.443 19.443 0 0 1-2.307-2.661c-.532-.71-.994-1.49-1.42-2.236.817-2.484 1.207-4.507 1.207-5.962 0-1.632-.603-3.336-2.342-3.336-.532 0-1.065.32-1.349.781-.78 1.384-.425 4.4.923 7.381a60.277 60.277 0 0 1-1.703 4.507c-.568 1.349-1.207 2.733-1.917 4.01C2.834 18.53.314 20.34.03 21.758c-.106.533.071 1.03.462 1.42.142.107.639.533 1.49.533 2.59 0 5.323-4.188 6.707-6.707 1.065-.355 2.13-.71 3.194-.994a34.963 34.963 0 0 1 3.407-.745c2.732 2.448 5.145 2.839 6.352 2.839 1.49 0 2.023-.604 2.2-1.1.32-.64.106-1.349-.213-1.704zm-1.42 1.03c-.107.532-.64.887-1.384.887-.213 0-.39-.036-.604-.071-1.348-.32-2.626-.994-3.903-2.059a17.717 17.717 0 0 1 2.98-.248c.746 0 1.385.035 1.81.142.497.106 1.278.426 1.1 1.348zm-7.524-1.668a38.01 38.01 0 0 0-2.945.674 39.68 39.68 0 0 0-2.52.745 40.05 40.05 0 0 0 1.207-2.555c.426-.994.78-2.023 1.136-2.981.354.603.745 1.207 1.135 1.739a50.127 50.127 0 0 0 1.987 2.378zM10.038 1.46a.768.768 0 0 1 .674-.425c.745 0 .887.851.887 1.526 0 1.135-.355 2.874-.958 4.861-1.03-2.768-1.1-5.074-.603-5.962zM6.134 17.997c-1.81 2.981-3.549 4.826-4.613 4.826a.872.872 0 0 1-.532-.177c-.213-.213-.32-.461-.249-.745.213-1.065 2.271-2.555 5.394-3.904Z"/></svg>
+                </a>
+                <button class="tool burger" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Άνοιγμα μενού" data-i18n-aria="menuAria"><span></span><span></span><span></span></button>
             </div>
-        </div>
-    </nav>
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 data-en="Konstantinos Kalliakoudis">Καλλιακούδης Κωνσταντίνος</h1>
-                    <p class="subtitle">Product Content Coordinator &amp; E-commerce Specialist</p>
-                    <p class="summary" data-en="Experienced e-commerce content coordinator specializing in online pharmacy, on-page SEO, price/promotion updates &amp; ERP–CMS integration. Leading a 3-person team for the fast &amp; accurate entry of 20,000+ product codes.">
-                        Έμπειρος συντονιστής περιεχομένου e-commerce με ειδίκευση σε ηλεκτρονικό φαρμακείο,
-                        SEO on-page, ενημερώσεις τιμών/προωθήσεων &amp; διαλειτουργία ERP-CMS.
-                        Υπεύθυνος ομάδας 3 ατόμων για ταχεία &amp; ακριβή καταχώρηση 20.000+ κωδικών.
-                    </p>
-                </div>
-                <div class="hero-visual">
-                    <div class="profile-card">
-                        <div class="profile-avatar">
-                            <img src="img/profilepic.webp" alt="Καλλιακούδης Κωνσταντίνος" class="profile-photo" width="1024" height="1536" fetchpriority="high" decoding="async">
-                        </div>
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>konskall@gmail.com</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+30 6983033004</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span data-en="Sparta, Laconia">Σπάρτη Λακωνίας</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-calendar"></i>
-                                <span>08/08/1987</span>
-                            </div>
-                        </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Βιογραφικό: τα φύλλα A4 στήνονται από το app.js με το περιεχόμενο του cv-data.js -->
+        <section id="cv">
+            <div class="sheets" id="sheets">
+                <noscript>
+                    <div class="nojs">
+                        <h1>Κωνσταντίνος Καλλιακούδης</h1>
+                        <p>Product Content Coordinator, E-commerce</p>
+                        <p>Η σελίδα χρειάζεται JavaScript για να δείξει το βιογραφικό. Μπορείς να το κατεβάσεις σε PDF στα <a href="Kalliakoudis_Konstantinos_CV.pdf">ελληνικά</a> ή στα <a href="Kalliakoudis_Konstantinos_CV_EN.pdf">αγγλικά</a>.</p>
                     </div>
-                </div>
-				<div class="hero-buttons">
-                        <a href="https://konskall.github.io/cv/Kalliakoudis_Konstantinos_CV.pdf" target="_blank" class="btn btn-primary"><i class="fas fa-download"></i><span data-en="Download CV">Κατέβασμα CV</span></a>
-                        <a href="#contact" class="btn btn-outline">
-                        <i class="fas fa-envelope"></i><span data-en="Contact">Επικοινωνία</span></a>
-                </div>
+                </noscript>
             </div>
-        </div>
-    </section>
-    <!-- Experience Section -->
-    <section id="experience" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Professional Experience">Επαγγελματική Εμπειρία</h2>
-                <p class="section-subtitle" data-en="My professional journey from retail &amp; food safety to E-commerce">
-                    Η επαγγελματική μου πορεία από το retail &amp; την ασφάλεια τροφίμων στο E-commerce
-                </p>
+        </section>
+
+        <!-- Portfolio -->
+        <section id="portfolio" class="web">
+            <div class="web-in">
+                <h2 class="web-title">Portfolio</h2>
+                <p class="web-sub" data-i18n="portfolioSub">Προσωπικά έργα &amp; websites που έχω δημιουργήσει</p>
+                <ul class="pf-grid" id="pfGrid"></ul>
             </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content" onclick="showExperienceDetails(0)">
-                        <h3 class="job-title">Product Content Coordinator</h3>
-                        <h4 class="company">Pharm24.gr</h4>
-                        <p class="period">
-                            <i class="fas fa-calendar"></i>
-                            <span data-en="09/2024 - Present">09/2024 - Σήμερα</span>
-                        </p>
-                        <p data-en="Online pharmacy with over 20,000 products - Sparta, Laconia">Online φαρμακείο με πάνω από 20.000 προϊόντα - Σπάρτη Λακωνίας</p>
-                        <p><em data-en="Click for more details">Κάντε κλικ για περισσότερες λεπτομέρειες</em></p>
-                    </div>
-                </div>
+        </section>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content" onclick="showExperienceDetails(1)">
-                        <h3 class="job-title">Data Entry Agent</h3>
-                        <h4 class="company">Pharm24.gr</h4>
-                        <p class="period">
-                            <i class="fas fa-calendar"></i>
-                            05/2023 - 09/2024
-                        </p>
-                        <p data-en="Online pharmacy with over 20,000 products - Sparta, Laconia">Online φαρμακείο με πάνω από 20.000 προϊόντα - Σπάρτη Λακωνίας</p>
-                        <p><em data-en="Click for more details">Κάντε κλικ για περισσότερες λεπτομέρειες</em></p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content" onclick="showExperienceDetails(2)">
-                        <h3 class="job-title">Store Manager</h3>
-                        <h4 class="company" data-en="Kalliakoudis Delicatessen">Καλλιακούδης Delicatessen</h4>
-                        <p class="period">
-                            <i class="fas fa-calendar"></i>
-                            09/2018 - 05/2023
-                        </p>
-                        <p data-en="Delicatessen store with a variety of cheeses &amp; traditional products">Κατάστημα delicatessen με ποικιλία τυριών &amp; παραδοσιακών προϊόντων</p>
-                        <p><em data-en="Click for more details">Κάντε κλικ για περισσότερες λεπτομέρειες</em></p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content" onclick="showExperienceDetails(3)">
-                        <h3 class="job-title">Dairy Zone Coordinator</h3>
-                        <h4 class="company" data-en="Kalliakoudis Raw Milk Trade">Καλλιακούδης Raw Milk Trade</h4>
-                        <p class="period">
-                            <i class="fas fa-calendar"></i>
-                            12/2014 - 08/2018
-                        </p>
-                        <p data-en="Collection &amp; trade of fresh raw milk">Συλλογή &amp; εμπορεία φρέσκου ανεπεξέργαστου γάλακτος</p>
-                        <p><em data-en="Click for more details">Κάντε κλικ για περισσότερες λεπτομέρειες</em></p>
-                    </div>
-                </div>
-
-				<div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content" onclick="showExperienceDetails(4)">
-                        <h3 class="job-title">HACCP Supervisor</h3>
-                        <h4 class="company" data-en="Gerasimos Kalliakoudis &amp; Co.">Γεράσιμος Καλλιακούδης &amp; Σία ΟΕ</h4>
-                        <p class="period">
-                            <i class="fas fa-calendar"></i>
-                            12/2012 - 12/2014
-                        </p>
-                        <p data-en="Manager of a certified HACCP food safety system">Διαχειριστής πιστοποιημένου συστήματος ασφάλειας τροφίμων HACCP</p>
-                        <p><em data-en="Click for more details">Κάντε κλικ για περισσότερες λεπτομέρειες</em></p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content" onclick="showExperienceDetails(5)">
-                        <h3 class="job-title">Business Owner - Self Employed</h3>
-                        <h4 class="company">Kalliakoudis K. Trans</h4>
-                        <p class="period">
-                            <i class="fas fa-calendar"></i>
-                            08/2010 - 11/2012
-                        </p>
-                        <p data-en="Freight transport company with a Public Use license">Μεταφορική εταιρεία εμπορευμάτων με άδεια Δημοσίας Χρήσης</p>
-                        <p><em data-en="Click for more details">Κάντε κλικ για περισσότερες λεπτομέρειες</em></p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Skills">Δεξιότητες</h2>
-                <p class="section-subtitle" data-en="Technical &amp; professional skills based on real experience &amp; supporting evidence">
-                    Τεχνικές &amp; επαγγελματικές δεξιότητες με βάση την πραγματική εμπειρία &amp; αποδεικτικά στοιχεία
-                </p>
-            </div>
-            <div class="skills-categories">
-                <!-- Technical Skills -->
-                <div class="skill-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-code"></i>
-                        <span data-en="Technical Skills">Τεχνικές Δεξιότητες</span>
-                    </h3>
-                    <div class="skills-badges">
-                        <div class="skill-badge technical" onclick="showSkillDetails(0)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-file-excel"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Excel</h4>
-                                    <span class="skill-level expert" data-en="Expert">Εξειδικευμένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="5+ years of experience">5+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Pivot tables for price analysis, ECDL Expert certified">Pivot tables για ανάλυση τιμών, ECDL Expert certified</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge technical" onclick="showSkillDetails(1)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-database"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Entersoft</h4>
-                                    <span class="skill-level advanced" data-en="Advanced">Προχωρημένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="3+ years of experience">3+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Creating product codes, updating price lists (import), enabling/disabling discount plans">Δημιουργία κωδικών, ανανέωση τιμοκαταλόγων (import) ενεργοποίηση/απενεργοποίηση εκπτωτικών πλάνων</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge technical" onclick="showSkillDetails(2)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-database"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Prisma Win</h4>
-                                    <span class="skill-level advanced" data-en="Advanced">Προχωρημένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="8+ years of experience">8+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Stock monitoring, document issuing, customer account reconciliation, document entry">Παρακολούθηση Stock, έκδοση παραστατικών, συμφωνία καρτελών πελατών, καταχώρηση παραστατικών</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge technical" onclick="showSkillDetails(3)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-image"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Photoshop &amp; Lightroom</h4>
-                                    <span class="skill-level intermediate" data-en="Intermediate">Μεσαίο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="3+ years of experience">3+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Editing product photos for the e-shop, quality improvement &amp; photo adjustments">Επεξεργασία φωτογραφιών προϊόντων για ανάρτηση στο e-shop, βελτίωση ποιότητας και τροποποιήσεις φωτογραφιών</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- E-commerce Skills -->
-                <div class="skill-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-shopping-cart"></i>
-                        E-commerce
-                    </h3>
-                    <div class="skills-badges">
-                        <div class="skill-badge ecommerce" onclick="showSkillDetails(4)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-box"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Product Management</h4>
-                                    <span class="skill-level expert" data-en="Expert">Εξειδικευμένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="2+ years of experience">2+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="20,000+ products at Pharm24.gr, content team coordinator">20.000+ προϊόντα Pharm24.gr, συντονιστής της ομάδας περιεχομένου</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge ecommerce" onclick="showSkillDetails(5)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-tags"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Price Management</h4>
-                                    <span class="skill-level expert" data-en="Expert">Εξειδικευμένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="2+ years of experience">2+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Weekly price updates, enabling/disabling discount plans">Εβδομαδιαίες ενημερώσεις τιμών, ενεργοποίηση/απενεργοποίηση εκπτωτικών πλάνων</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge ecommerce" onclick="showSkillDetails(6)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-pen-fancy"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Content Strategy</h4>
-                                    <span class="skill-level expert" data-en="Expert">Εξειδικευμένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="2+ years of experience">2+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Restructuring the e-shop presentation of dietary supplements, SEO optimization">Αναδιάρθρωση προβολής στο e-shop συμπληρωμάτων διατροφής, βελτιστοποίηση SEO</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-						<div class="skill-badge technical" onclick="showSkillDetails(7)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-search"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">SEO Strategy</h4>
-                                    <span class="skill-level expert" data-en="Expert">Εξειδικευμένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="2+ years of experience">2+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="500%+ increase in views for Pharm24.gr supplements">Αύξηση προβολών &gt;500% στα συμπληρώματα Pharm24.gr</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-						<div class="skill-badge technical" onclick="showSkillDetails(8)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-search"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Marketing Strategy</h4>
-                                    <span class="skill-level advanced" data-en="Advanced">Προχωρημένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="2+ years of experience">2+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Implementing marketing strategy &amp; proposing optimizations">Εφαρμογή στρατηγικής marketing &amp; προτάσεις βελτιστοποιήσεων</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge ecommerce" onclick="showSkillDetails(9)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-sync"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Inventory Sync</h4>
-                                    <span class="skill-level expert" data-en="Expert">Εξειδικευμένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="2+ years of experience">2+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Monitoring &amp; managing inventory across physical stores &amp; the e-shop">Παρακολούθηση &amp; διαχείρηση αποθεμάτων φυσικών καταστημάτων και ηλεκτρονικού καταστήματος</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Management Skills -->
-                <div class="skill-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-users"></i>
-                        <span data-en="Management">Διοίκηση</span>
-                    </h3>
-                    <div class="skills-badges">
-                        <div class="skill-badge management" onclick="showSkillDetails(10)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-user-tie"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Team Leadership</h4>
-                                    <span class="skill-level advanced" data-en="Advanced">Προχωρημένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="1+ year of experience">1+ έτος εμπειρίας</p>
-                            <p class="skill-context" data-en="Leading a 3-person team for product entry on the e-shop">Υπεύθυνος ομάδας 3 ατόμων για καταχώρηση προίοντων στο e-shop</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge management" onclick="showSkillDetails(11)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-tasks"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name">Project Management</h4>
-                                    <span class="skill-level intermediate" data-en="Intermediate">Μεσαίο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="3+ years of experience">3+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Designing &amp; launching a traditional-products store in Sparta">Σχεδιασμός &amp; υλοποίηση καταστήματος πώλησης παραδοσιακών προϊόντων στη Σπάρτη</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge management" onclick="showSkillDetails(12)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-cogs"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name" data-en="Process Optimization">Βελτιστοποίηση Διαδικασιών</h4>
-                                    <span class="skill-level intermediate" data-en="Intermediate">Μεσαίο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="5+ years of experience">5+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Team operating procedures, route planning, plan implementation, goal tracking">Διαδικασίες λειτουργίας ομάδας, σχεδιασμός δρομολογίων, εφαρμογή πλάνων, παρακολούθηση στόχων</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-						<div class="skill-badge management" onclick="showSkillDetails(13)">
-                            <div class="skill-badge-header">
-                                <i class="fas fa-share-nodes"></i>
-                                <div class="skill-info">
-                                    <h4 class="skill-name" data-en="Delegation &amp; Task Assignment">Διαχείρηση &amp; Ανάθεση Αρμοδιοτήτων</h4>
-                                    <span class="skill-level expert" data-en="Expert">Εξειδικευμένο</span>
-                                </div>
-                            </div>
-                            <p class="skill-experience" data-en="5+ years of experience">5+ έτη εμπειρίας</p>
-                            <p class="skill-context" data-en="Processes related to retail sales, task assignment, work-progress tracking">Διαδικασίες που αφορούν λιανικές πωλήσεις, ανάθεση εργασιών, παρακολούθηση πορείας εργασιών</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Languages -->
-                <div class="skill-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-language"></i>
-                        <span data-en="Languages">Γλώσσες</span>
-                    </h3>
-                    <div class="skills-badges">
-                        <div class="skill-badge language" onclick="showSkillDetails(14)">
-                            <div class="skill-badge-header">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Greece.svg" alt="Ελληνική σημαία" style="width:24px; height:16px;" loading="lazy" decoding="async">
-                                <div class="skill-info">
-                                    <h4 class="skill-name" data-en="Greek">Ελληνικά</h4>
-                                    <span class="skill-level native" data-en="Native">Μητρική γλώσσα</span>
-                                </div>
-                            </div>
-                            <p class="skill-context" data-en="Professional language of communication, content writing, correct use of written &amp; spoken language">Επαγγελματική γλώσσα επικοινωνίας, συγγραφή περιεχομένου, σωστή χρήση γραπτού &amp; προφορικού λόγου</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-
-                        <div class="skill-badge language" onclick="showSkillDetails(15)">
-                            <div class="skill-badge-header">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="Αμερικανική σημαία" style="width:28px; height:20px;" loading="lazy" decoding="async">
-								<img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="Βρετανική σημαία" style="width:30px; height:22px;" loading="lazy" decoding="async">
-                                <div class="skill-info">
-                                    <h4 class="skill-name" data-en="English">Αγγλικά</h4>
-                                    <span class="skill-level intermediate certified" data-en="Intermediate (B2 Certified - Good knowledge)">Μεσαίο (Β2 Certified - Καλή γνώση)</span>
-                                </div>
-                            </div>
-                            <p class="skill-context" data-en="Excellent reading comprehension, very good listening comprehension, broad vocabulary">Άριστη κατανόηση γραπτού λόγου, πολύ καλή κατανόηση προφορικού λόγου, διευρυμένο λεξιλόγιο</p>
-                            <div class="skill-hover-indicator">
-                                <i class="fas fa-info-circle"></i>
-                                <span data-en="Click for details">Κλικ για λεπτομέρειες</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education & Certifications Section -->
-    <section id="education" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Education &amp; Certifications">Εκπαίδευση &amp; Πιστοποιήσεις</h2>
-                <p class="section-subtitle" data-en="Academic education &amp; professional certifications">
-                    Ακαδημαϊκή εκπαίδευση &amp; επαγγελματικές πιστοποιήσεις
-                </p>
-            </div>
-            <div class="edu-cert-grid">
-                <div>
-                    <h3 style="margin-bottom: var(--space-24); display: flex; align-items: center; gap: var(--space-8);">
-                        <i class="fas fa-graduation-cap" style="color: var(--color-primary);"></i>
-                        <span data-en="Education">Εκπαίδευση</span>
-                    </h3>
-                    <div class="edu-item">
-                        <h4 class="degree" data-en="Bachelor's Degree in Applied Informatics in Management &amp; Finance">Πτυχίο Εφαρμοσμένης Πληροφορικής στη Διοίκηση &amp; τα Χρηματοοικονομικά</h4>
-                        <p class="institution" data-en="University of Patras">Πανεπιστήμιο Πατρών</p>
-                        <p class="period" style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">2006 - 2010</p>
-                        <p style="margin-top: var(--space-8); color: var(--color-text-secondary);" data-en="Department of Informatics Applications in Management &amp; Economics">Τμήμα Εφαρμογών Πληροφορικής στη Διοίκηση &amp; Οικονομία</p>
-						<p style="margin-top: var(--space-8); color: var(--color-text-secondary);" data-en="<b>Thesis</b>: The Athens Derivatives Exchange &amp; modern financial products. Case study: Investing in Futures Contracts."><b>Πτυχιακή εργασία με Θέμα</b>: Χρηματιστήριο Παραγώγων Αθηνών &amp; σύγχρονα χρηματοοικονομικά προϊόντα. Μελέτη περίπτωσης: Επένδυση σε Συμβόλαια Μελλοντικής Εκπλήρωσης.</p>
-                    </div>
-                </div>
-                <div>
-                    <h3 style="margin-bottom: var(--space-24); display: flex; align-items: center; gap: var(--space-8);">
-                        <i class="fas fa-certificate" style="color: var(--color-primary);"></i>
-                        <span data-en="Certifications">Πιστοποιήσεις</span>
-                    </h3>
-                    <div class="cert-item">
-                        <h4 class="cert-name">ECDL Expert </h4>
-                        <p class="cert-issuer">ECDL Foundation</p>
-                        <p style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">Serial Number : EL200638866KK</p>
-                        <p style="margin-top: var(--space-8); color: var(--color-text-secondary);" data-en="The ECDL Expert certification verifies high-level knowledge &amp; skills across four core office applications (Word Processing, Spreadsheets, Databases, Presentations). The holder can manage complex &amp; demanding projects, demonstrating advanced use of these applications.">Ο τίτλος ECDL Expert πιστοποιεί γνώσεις &amp; δεξιότητες υψηλού επιπέδου σε τέσσερις βασικές εφαρμογές γραφείου (Επεξεργασία Κειμένου, Υπολογιστικά Φύλλα, Βάσεις Δεδομένων, Παρουσιάσεις). Ο κάτοχος μπορεί να διαχειρίζεται σύνθετα &amp; απαιτητικά έργα, αποδεικνύοντας προχωρημένη χρήση των εφαρμογών αυτών. </p>
-                    </div>
-                     </div>
-                </div>
-				<h3 style="margin-bottom: var(--space-24); display: flex; align-items: center; gap: var(--space-8);">
-                       <i class="fas fa-chalkboard-teacher" style="color: var(--color-primary);"></i>
-                        <span data-en="Seminars">Σεμινάρια</span>
-                    </h3>
-				<div class="edu-cert-grid">
-					<div class="edu-item">
-                        <h4 class="degree" data-en="AI Automations &amp; E-commerce">AI Automations &amp; Ηλεκτρονικό Εμπόριο</h4>
-                        <p class="institution" data-en="Athens University of Economics and Business - GR.EC.A.">Οικονομικό Πανεπιστήμιο Αθηνών - GR.EC.A.</p>
-                        <p class="period" style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">2026</p>
-                        <p style="margin-top: var(--space-8); color: var(--color-text-secondary);" data-en="A program designed under the academic supervision of the ELTRUN E-Commerce &amp; E-Business Laboratory of the Athens University of Economics and Business, aiming to train business executives in topics related to AI Automations and E-commerce.">Πρόκειται για ένα πρόγραμμα το οποίο σχεδιάστηκε με την επιστημονική ευθύνη του Εργαστηρίου Ηλεκτρονικού Εμπορίου και Επιχειρείν-ELTRUN του Οικονομικού Πανεπιστημίου Αθηνών, και έχει ως στόχο την εκπαίδευση των στελεχών των επιχειρήσεων σε θέματα που αφορούν AI Automations και Ηλεκτρονικό Εμπόριο.</p>
-                    </div>
-                    <div class="edu-item">
-                        <h4 class="degree">Executive eCommerce Certification</h4>
-                        <p class="institution" data-en="Athens University of Economics and Business - GR.EC.A.">Οικονομικό Πανεπιστήμιο Αθηνών - GR.EC.A.</p>
-                        <p class="period" style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">2026</p>
-                        <p style="margin-top: var(--space-8); color: var(--color-text-secondary);" data-en="In today's digital era, e-commerce is essential for businesses to stay competitive. Since running an online store requires specialized knowledge across many areas (technology, digital marketing, operations, logistics, finance, legal), GR.EC.A's Ecommerce Academy, in collaboration with AUEB's ELTRUN, offers comprehensive training programs tailored to the Greek market to fill this gap.">Στη σημερινή ψηφιακή εποχή, το ηλεκτρονικό εμπόριο είναι απαραίτητο για τις επιχειρήσεις να παραμείνουν ανταγωνιστικές. Αφού όμως ένα ηλεκτρονικό κατάστημα απαιτεί εξειδικευμένη γνώση σε πολλούς τομείς (τεχνική, ψηφιακή προώθηση, λειτουργίες, logistics, χρηματοοικονομικά, νομικά), το Ecommerce Academy της GR.EC.A σε συνεργασία με το ELTRUN του ΟΠΑ προσφέρει ολοκληρωμένα προγράμματα κατάρτισης προσαρμοσμένα στην ελληνική αγορά για να καλύψει αυτό το κενό.</p>
-                    </div>
-					<div class="edu-item">
-                        <h4 class="degree">Social Media Marketing</h4>
-                        <p class="institution">UCert</p>
-                        <p class="period" style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">2026</p>
-                        <p style="margin-top: var(--space-8); color: var(--color-text-secondary);" data-en="The 'Social Media Marketing' program provides comprehensive knowledge &amp; skills in using digital tools and marketing techniques. It focuses on social media, digital marketing, e-commerce and content creation to promote products and services, covering topics from image/video editing to e-shop strategies and data protection.">Το πρόγραμμα "Social Media Marketing" παρέχει ολοκληρωμένες γνώσεις και δεξιότητες στη χρήση ψηφιακών εργαλείων και τεχνικών μάρκετινγκ. Εστιάζει στα μέσα κοινωνικής δικτύωσης, το ψηφιακό μάρκετινγκ, το e-commerce και τη δημιουργία περιεχομένου για την προώθηση προϊόντων και υπηρεσιών, καλύπτοντας θέματα από επεξεργασία εικόνας/βίντεο έως στρατηγικές e-shop και προστασία δεδομένων.</p>
-                    </div>
-					<div class="edu-item">
-                        <h4 class="degree">SEO Academy</h4>
-                        <p class="institution" data-en="HAU Hellenic American Union">HAU Ελληνοαμερικανική Ένωση</p>
-                        <p class="period" style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">2025</p>
-                        <p style="margin-top: var(--space-8); color: var(--color-text-secondary);" data-en="The SEO Academy seminar offers hands-on training in SEO &amp; digital marketing. It teaches strategies, techniques &amp; tools for on-page, off-page &amp; advanced SEO, keyword research &amp; competitor analysis, also covering the latest developments in AI for SEO.">Το σεμινάριο SEO Academy προσφέρει πρακτική εκπαίδευση στο SEO &amp; digital marketing. Διδάσκει στρατηγικές, τεχνικές &amp; εργαλεία για on-page, off-page &amp; advanced SEO, keyword research &amp; ανάλυση ανταγωνισμού, καλύπτοντας &amp; τις τελευταίες εξελίξεις με το AI στο SEO.</p>
-                    </div>
-					</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Portfolio</h2>
-                <p class="section-subtitle" data-en="Personal projects &amp; websites I have created">
-                    Προσωπικά έργα &amp; websites που έχω δημιουργήσει
-                </p>
-            </div>
-            <div class="portfolio-grid">
-			    <div class="portfolio-item">
-                    <div class="portfolio-content">
-                        <h3 class="portfolio-title" data-en="Mybnbmanager - Short-Term Rental Management">Mybnbmanager - Διαχείριση Βραχυχρόνιων Ενοικιάσεων</h3>
-                        <p class="portfolio-type">Tourism &amp; Real Estate</p>
-                        <p class="portfolio-description" data-en="A short-term rental management platform that combines market expertise with cutting-edge technology. We help owners maximize their revenue without having to deal with the day-to-day details.">
-                            Πλατφόρμα διαχείρισης βραχυχρόνιων ενοικιάσεων με γνώση της αγοράς και τεχνολογία αιχμής. Βοηθούμε ιδιοκτήτες να μεγιστοποιούν τα έσοδά τους χωρίς να ασχολούνται με τις καθημερινές λεπτομέρειες.
-                        </p>
-                        <a href="https://www.mybnbmanager.gr/" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.mybnbmanager.gr
-                        </a>
-                    </div>
-                </div>
-			    <div class="portfolio-item">
-                    <div class="portfolio-content">
-                        <h3 class="portfolio-title">SnapTour - Ai Landmark Recognition & Audio Tours</h3>
-                        <p class="portfolio-type">Tourism &amp; Information</p>
-                        <p class="portfolio-description" data-en="An innovative AI app for landmark recognition with audio tours, points of interest and chat with a virtual guide.">
-                            Πρωτοποριακή εφαρμογή AI αναγνώρισης μνημείων με ηχητικές ξεναγήσεις, σημεία ενδιαφέροντος και chat με εικονικό ξεναγό.
-                        </p>
-                        <a href="https://konskall.github.io/snaptour/index.html" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.konskall.github.io/snaptour
-                        </a>
-                    </div>
-                </div>
-			    <div class="portfolio-item">
-                    <div class="portfolio-content">
-                        <h3 class="portfolio-title">Delicatessen Store Business Website</h3>
-                        <p class="portfolio-type">Business &amp; E-commerce</p>
-                        <p class="portfolio-description" data-en="A professional website presenting a delicatessen store with a product catalog, contact details &amp; business information.">
-                            Επαγγελματικό website για παρουσίαση καταστήματος delicatessen με κατάλογο προϊόντων, στοιχεία επικοινωνίας &amp; επαγγελματικές πληροφορίες.
-                        </p>
-                        <a href="http://www.delibykaliakoudis.gr" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.delibykaliakoudis.gr
-                        </a>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                     <div class="portfolio-content">
-                        <h3 class="portfolio-title">Traditional Dairy Product Production Business</h3>
-                        <p class="portfolio-type">Business &amp; Production</p>
-                        <p class="portfolio-description" data-en="A website presenting an artisan workshop producing traditional dairy &amp; cheese products.">
-                            Ιστοσελίδα παρουσίασης βιοτεχνίας παραγωγής παραδοσιακών τυροκομικών προϊόντων.
-                        </p>
-                        <a href="http://www.gerkaliakoudis.gr" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.gerkaliakoudis.gr
-                        </a>
-                    </div>
-                </div>
-				<div class="portfolio-item">
-                    <div class="portfolio-content">
-                        <h3 class="portfolio-title">Smart PDF Compressor</h3>
-                        <p class="portfolio-type">Tools &amp; Utilities</p>
-                        <p class="portfolio-description" data-en="A free online app for compressing PDF files with three compression options.">
-                            Online δωρεάν εφαρμογή για συμπίεση αρχείων PDF αρχείων με δυνατότητα 3 επιλογών συμπίεσης.
-                        </p>
-                        <a href="https://konskall.github.io/smartpdfcompressor/" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.konskall.github.io/smartpdfcompressor
-                        </a>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                     <div class="portfolio-content">
-                        <h3 class="portfolio-title">Aoraton Chat App</h3>
-                        <p class="portfolio-type">Business &amp; Communication</p>
-                        <p class="portfolio-description" data-en="An app for encrypted real-time chat with private, PIN-based rooms. Talk freely and anonymously.">
-                            Εφαρμογή για κρυπτογραφημένη συνομιλία σε πραγματικό χρόνο με ιδιωτικά δωμάτια που βασίζονται σε PIN. Κοινοποιήστε ελεύθερα, ανώνυμα.
-                        </p>
-                        <a href="https://aoraton.com/" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.aoraton.com
-                        </a>
-                    </div>
-                </div>
-				<div class="portfolio-item">
-                     <div class="portfolio-content">
-                        <h3 class="portfolio-title">Alien Invaders - Space War</h3>
-                        <p class="portfolio-type">Gaming &amp; Fun</p>
-                        <p class="portfolio-description" data-en="A vintage-style arcade space-battle game against the alien Xenophage collective.">
-                            Παιχνίδι arcade vintage style διαστημικής μάχης με την εξωγήινη κολεκτίβα Xenophage.
-                        </p>
-                        <a href="https://konskall.github.io/alieninvaders/" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.konskall.github.io/alieninvaders
-                        </a>
-                    </div>
-                </div>
-				<div class="portfolio-item">
-                     <div class="portfolio-content">
-                        <h3 class="portfolio-title" data-en="Eikonologio.gr - Amateur Photography &amp; Reflections">Eikonologio.gr - Ερασιτεχνική Φωτογραφία &amp; Στοχασμοί</h3>
-                        <p class="portfolio-type">Photography &amp; Hobby</p>
-                        <p class="portfolio-description" data-en="A visual journal combining images with thoughts &amp; reflections. Coming soon...">
-                            Ένα οπτικό ημερολόγιο που συνδυάζει εικόνες με σκέψεις &amp; προβληματισμούς. Coming soon...
-                        </p>
-                        <a href="https://eikonologio.gr" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.eikonologio.gr
-                        </a>
-                    </div>
-                </div>
-				<div class="portfolio-item">
-                     <div class="portfolio-content">
-                        <h3 class="portfolio-title" data-en="SpriteHunter - Red Sprite Forecasts &amp; Photography">SpriteHunter - Πρόγνωση &amp; Φωτογράφιση Red Sprites</h3>
-                        <p class="portfolio-type">Science &amp; Photography</p>
-                        <p class="portfolio-description" data-en="A free Red Sprite &amp; TLE observatory with real-time EUMETSAT MTG-LI lightning, thunderstorm forecasts and precise camera aiming from Greece.">
-                            Δωρεάν παρατηρητήριο Red Sprites &amp; TLE με κεραυνούς EUMETSAT MTG-LI σε πραγματικό χρόνο, πρόγνωση καταιγίδων και ακριβή στόχευση κάμερας από την Ελλάδα.
-                        </p>
-                        <a href="https://spritehunter.vercel.app/" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.spritehunter.vercel.app
-                        </a>
-                    </div>
-                </div>
-				<div class="portfolio-item">
-                     <div class="portfolio-content">
-                        <h3 class="portfolio-title" data-en="AURA - Smart AI Assistant">AURA - Έξυπνος Βοηθός AI</h3>
-                        <p class="portfolio-type">AI &amp; IoT</p>
-                        <p class="portfolio-description" data-en="A Greek-first AI companion for an ESP32-S3 device with an AMOLED screen. It talks by voice &amp; text, understands follow-up questions, sets alarms &amp; reminders and includes weather, radio and encrypted Aoraton messages.">
-                            Ελληνόφωνος βοηθός AI για συσκευή ESP32-S3 με οθόνη AMOLED. Συνομιλεί με φωνή &amp; κείμενο, κατανοεί ερωτήσεις συνέχειας, βάζει ξυπνητήρια &amp; υπενθυμίσεις και έχει καιρό, ραδιόφωνο και κρυπτογραφημένα μηνύματα Aoraton.
-                        </p>
-                        <a href="https://github.com/konskall/aura" target="_blank" class="portfolio-url">
-                            <i class="fas fa-external-link-alt"></i>
-                            www.github.com/konskall/aura
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-en="Contact">Επικοινωνία</h2>
-                <p class="section-subtitle" data-en="Send me a message or contact me directly">
-                    Στείλτε μου μήνυμα ή επικοινωνήστε μαζί μου απευθείας
-                </p>
-            </div>
-            <div class="contact-container">
-                <div class="contact-form">
-                    <h3 style="margin-bottom: var(--space-20); display: flex; align-items: center; gap: var(--space-8);">
-                        <i class="fas fa-envelope" style="color: var(--color-primary);"></i>
-                        <span data-en="Send a Message">Στείλτε Μήνυμα</span>
-                    </h3>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name" class="form-label" data-en="Name *">Όνομα *</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email *</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject" class="form-label" data-en="Subject *">Θέμα *</label>
-                            <input type="text" id="subject" name="subject" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message" class="form-label" data-en="Message *">Μήνυμα *</label>
-                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
-                        </div>
+        <!-- Επικοινωνία -->
+        <section id="contact" class="web">
+            <div class="web-in">
+                <h2 class="web-title" data-i18n="contactTitle">Επικοινωνία</h2>
+                <p class="web-sub" data-i18n="contactSub">Στείλτε μου μήνυμα ή επικοινωνήστε μαζί μου απευθείας</p>
+                <div class="ct-grid">
+                    <form class="card" id="contactForm" action="https://formspree.io/f/mvgvbwno" method="POST">
+                        <h3 data-i18n="sendMessage">Στείλτε Μήνυμα</h3>
+                        <label for="name" data-i18n="fName">Όνομα *</label>
+                        <input type="text" id="name" name="name" autocomplete="name" required>
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
+                        <label for="subject" data-i18n="fSubject">Θέμα *</label>
+                        <input type="text" id="subject" name="subject" required>
+                        <label for="message" data-i18n="fMessage">Μήνυμα *</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
                         <!-- Honeypot: τα bots το συμπληρώνουν, το Formspree πετάει το submission -->
-                        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none;">
-                        <!-- Το reCAPTCHA widget μπαίνει εδώ από το app.js, μόνο αν έχει οριστεί RECAPTCHA_SITE_KEY -->
+                        <input class="gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <!-- Το reCAPTCHA μπαίνει εδώ από το app.js, όταν υπάρχει recaptchaKey στο cv-data.js -->
                         <div id="recaptchaContainer"></div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            <i class="fas fa-paper-plane"></i>
-                            <span data-en="Send Message">Αποστολή Μηνύματος</span>
-                        </button>
-                        <div id="successMessage" class="success-message">
-                            <i class="fas fa-check-circle"></i>
-                            <span data-en="Your message was sent successfully!">Το μήνυμά σας στάλθηκε επιτυχώς!</span>
-                        </div>
+                        <button type="submit" class="btn btn-wide" data-i18n="send">Αποστολή Μηνύματος</button>
+                        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
                     </form>
-                </div>
-
-                <div class="contact-info-section">
-                    <div class="contact-card">
-                        <h3><i class="fas fa-address-book"></i> <span data-en="Contact Details">Στοιχεία Επικοινωνίας</span></h3>
-                        <div class="contact-detail">
-                            <i class="fas fa-envelope"></i>
-                            <span>konskall@gmail.com</span>
+                    <div class="ct-side">
+                        <div class="card">
+                            <h3 data-i18n="details">Στοιχεία Επικοινωνίας</h3>
+                            <ul class="ct-list">
+                                <li><span>Email</span><a href="mailto:konskall@gmail.com">konskall@gmail.com</a></li>
+                                <li><span data-i18n="phone">Τηλέφωνο</span><a href="tel:+306983033004">+30 698 303 3004</a></li>
+                                <li><span data-i18n="location">Τοποθεσία</span><b id="ctCity">Σπάρτη Λακωνίας</b></li>
+                                <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/konstantinos-kalliakoudis-902b90103" target="_blank" rel="noopener">konstantinos-kalliakoudis</a></li>
+                            </ul>
+                            <button type="button" class="share" id="shareButton">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+                                <span data-i18n="share">Κοινοποίηση</span>
+                            </button>
                         </div>
-                        <div class="contact-detail">
-                            <i class="fas fa-phone"></i>
-                            <span>+30 6983033004</span>
-                        </div>
-                        <div class="contact-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span data-en="41 Ep. Vresthenis St., Sparta, Laconia 23100">Επ. Βρεσθένης 41, Σπάρτη Λακωνίας ΤΚ 23100</span>
-                        </div>
-                        <div class="contact-detail">
-                            <i class="fas fa-user"></i>
-                            <span data-en="Married - 08/08/1987">Έγγαμος - 08/08/1987</span>
-                        </div>
-						 <div class="contact-detail">
-                            <i class="fab fa-linkedin"></i>
-                            <a href="http://linkedin.com/in/konstantinos-kalliakoudis-902b90103" target="_blank" rel="noopener noreferrer">
-                             <span>LinkedIn</span> </a>
-                         </div>
-						 <div class="contact-detail">
-                           <i class="fas fa-share-alt"></i>
-                            <button id="shareButton" class="contact-item share-btn" title="Κοινοποίηση" data-en-title="Share"><span data-en="Share">Κοινοποίηση</span></button>
-                         </div>
-                    </div>
-
-                    <div class="contact-card">
-                        <h3><i class="fas fa-heart"></i> <span data-en="Interests">Ενδιαφέροντα</span></h3>
-                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-16);">
-                            <span style="background: var(--color-bg-1); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Web Development</span>
-							<span style="background: var(--color-bg-6); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Vibe Coding</span>
-                            <span style="background: var(--color-bg-2); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Hardware Building</span>
-                            <span style="background: var(--color-bg-3); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Ubuntu/Linux</span>
-                            <span style="background: var(--color-bg-5); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">E-commerce Optimization</span>
-                            <span style="background: var(--color-bg-6); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Digital Marketing</span>
-							<span style="background: var(--color-bg-1); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">SEO</span>
-							<span style="background: var(--color-bg-4); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Photography</span>
-							<span style="background: var(--color-bg-3); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Hiking</span>
-                            <span style="background: var(--color-bg-5); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Astronomy</span>
-                            <span style="background: var(--color-bg-2); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Music</span>
-							<span style="background: var(--color-bg-6); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Art</span>
-							<span style="background: var(--color-bg-4); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Cinema</span>
-							<span style="background: var(--color-bg-1); color: var(--color-primary); padding: var(--space-6) var(--space-12); border-radius: var(--radius-full); font-size: var(--font-size-sm);">Food and Beverage</span>
+                        <div class="card">
+                            <h3 data-i18n="interests">Ενδιαφέροντα</h3>
+                            <ul class="chips" id="chips"></ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Modal for Experience & Skill Details -->
-    <div id="experienceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
-        <div class="modal-content">
-            <span class="close" role="button" tabindex="0" aria-label="Κλείσιμο" data-en-aria="Close">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <h3 id="modalCompany"></h3>
-            <p id="modalPeriod"></p>
-            <p id="modalDescription"></p>
-            <h4 id="modalResponsibilitiesTitle" data-en="Main Responsibilities:">Κύριες Αρμοδιότητες:</h4>
-            <ul id="modalResponsibilities"></ul>
-        </div>
-    </div>
-    <!-- JavaScript -->
-    <script src="app.js"></script>
-	<a href="#home" class="scroll-to-top-btn" title="Πάνω" data-en-title="Top">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="18 15 12 9 6 15"></polyline>
-    </svg>
-</a>
+    <footer class="foot">
+        <p>© <span id="footYear">2026</span> <span data-i18n="footer">Κωνσταντίνος Καλλιακούδης</span></p>
+    </footer>
+
+    <a href="#cv" class="to-top" id="toTop" aria-label="Πάνω" data-i18n-aria="top">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </a>
 </body>
 </html>
