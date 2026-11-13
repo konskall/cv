@@ -190,6 +190,10 @@ a.pf:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow:
 #recaptchaContainer { display: flex; justify-content: center; overflow: hidden; }
 #recaptchaContainer:not(:empty) { margin-top: 16px; }
 #recaptchaContainer > div { flex: none; width: 304px; height: 78px; transform-origin: top center; }
+/* Στο σκοτεινό θέμα η σελίδα δηλώνει color-scheme: dark, ενώ το πλαίσιο του reCAPTCHA είναι «φωτεινό» έγγραφο.
+   Όταν τα δύο διαφέρουν, ο browser βάφει το πλαίσιο λευκό και γύρω από το widget φαίνεται λευκή λωρίδα
+   αντί για τη σκιά του. Με το ίδιο color-scheme το πλαίσιο μένει διάφανο. */
+#recaptchaContainer iframe { color-scheme: light; }
 .btn-wide { width: 100%; margin-top: 16px; padding: 15px; font-size: 15px; }
 .form-status { display: none; margin-top: 14px; padding: 12px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; }
 .form-status.ok { display: block; color: var(--deep); background: color-mix(in srgb, var(--accent) 14%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); }
