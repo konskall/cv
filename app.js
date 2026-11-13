@@ -239,15 +239,22 @@
     const slot = document.createElement('div');
     box.replaceChildren(slot);
     try {
-      captchaId = window.grecaptcha.render(slot, {
-        sitekey: DATA.form.recaptchaKey,
-        theme: currentTheme(),
-        // το κανονικό widget έχει πλάτος 304px και δεν χωρά σε πολύ στενές οθόνες
-        size: box.clientWidth < 304 ? 'compact' : 'normal'
-      });
+      captchaId = window.grecaptcha.render(slot, { sitekey: DATA.form.recaptchaKey, theme: currentTheme() });
     } catch (e) {
       captchaId = null;
     }
+    fitCaptcha();
+  }
+
+  // Το widget έχει σταθερό μέγεθος 304×78 και μένει στο κέντρο της φόρμας (style.css).
+  // Όπου η φόρμα είναι πιο στενή από αυτό (μικρά κινητά), μικραίνει ολόκληρο για να χωρά.
+  function fitCaptcha() {
+    const box = $('recaptchaContainer');
+    const slot = box.firstElementChild;
+    if (!slot) return;
+    const scale = Math.min(1, box.clientWidth / 304);
+    slot.style.transform = scale < 1 ? `scale(${scale})` : '';
+    box.style.height = scale < 1 ? `${Math.ceil(78 * scale)}px` : '';
   }
 
   // true αν το captcha συμπληρώθηκε, ή αν το script δεν φόρτωσε καθόλου
@@ -414,7 +421,7 @@
   window.addEventListener('scroll', () => {
     if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
-  window.addEventListener('resize', markActiveLink, { passive: true });
+  window.addEventListener('resize', () => { markActiveLink(); fitCaptcha(); }, { passive: true });
 
   // Η σελίδα στήνεται μετά το άνοιγμα, άρα ένας σύνδεσμος με #ενότητα θέλει ξανά κύλιση εκεί
   if (location.hash.length > 1) {

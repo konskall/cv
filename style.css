@@ -185,7 +185,11 @@ a.pf:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow:
 .card input:focus, .card textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 28%, transparent); }
 .card [aria-invalid="true"] { border-color: var(--error); }
 .card input.gotcha { display: none; }
+/* reCAPTCHA στο κέντρο της φόρμας. Το widget έχει σταθερό μέγεθος 304×78·
+   σε πιο στενή φόρμα το μικραίνει το app.js γύρω από το κέντρο του. */
+#recaptchaContainer { display: flex; justify-content: center; overflow: hidden; }
 #recaptchaContainer:not(:empty) { margin-top: 16px; }
+#recaptchaContainer > div { flex: none; width: 304px; height: 78px; transform-origin: top center; }
 .btn-wide { width: 100%; margin-top: 16px; padding: 15px; font-size: 15px; }
 .form-status { display: none; margin-top: 14px; padding: 12px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; }
 .form-status.ok { display: block; color: var(--deep); background: color-mix(in srgb, var(--accent) 14%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); }
